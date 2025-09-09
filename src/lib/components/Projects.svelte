@@ -12,9 +12,9 @@
   const projects: Project[] = [
     {
       icon: AppWindow,
-      name: "maxp.co",
+      name: "maxpetretta.com",
       description: "Svelte 5 blog",
-      href: "https://github.com/maxpetretta/maxp.co",
+      href: "https://github.com/maxpetretta/maxpetretta.com",
     },
     {
       icon: Zap,
