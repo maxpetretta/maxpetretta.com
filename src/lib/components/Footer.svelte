@@ -1,8 +1,8 @@
 <script>
-  import { Button } from "$lib/components/ui/button"
-  import { SOCIALS } from "$lib/constants"
+import { Button } from "$lib/components/ui/button"
+import { SOCIALS } from "$lib/constants"
 
-  const socials = Object.entries(SOCIALS).map(([name, href]) => ({ name, href }))
+const socials = Object.entries(SOCIALS).map(([name, href]) => ({ name, href }))
 </script>
 
 <footer class="-mx-4 mb-6">

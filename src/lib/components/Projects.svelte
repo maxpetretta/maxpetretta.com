@@ -1,40 +1,40 @@
 <script lang="ts">
-  import { AppWindow, Keyboard, Twitter, Zap } from "lucide-svelte"
-  import type { ComponentType } from "svelte"
+import { AppWindow, Keyboard, Twitter, Zap } from "lucide-svelte"
+import type { ComponentType } from "svelte"
 
-  type Project = {
-    icon: ComponentType
-    name: string
-    description: string
-    href: string
-  }
+type Project = {
+  icon: ComponentType
+  name: string
+  description: string
+  href: string
+}
 
-  const projects: Project[] = [
-    {
-      icon: AppWindow,
-      name: "maxpetretta.com",
-      description: "Svelte 5 blog",
-      href: "https://github.com/maxpetretta/maxpetretta.com",
-    },
-    {
-      icon: Zap,
-      name: "quickcast.xyz",
-      description: "Farcaster client",
-      href: "https://quickcast.xyz",
-    },
-    {
-      icon: Twitter,
-      name: "twitt3r.xyz",
-      description: "Twitter on Ethereum",
-      href: "https://github.com/maxpetretta/twitt3r.xyz",
-    },
-    {
-      icon: Keyboard,
-      name: "keymap",
-      description: "ZMK combo keymap",
-      href: "https://github.com/maxpetretta/keymap",
-    },
-  ]
+const projects: Project[] = [
+  {
+    icon: AppWindow,
+    name: "maxpetretta.com",
+    description: "Svelte 5 blog",
+    href: "https://github.com/maxpetretta/maxpetretta.com",
+  },
+  {
+    icon: Zap,
+    name: "quickcast.xyz",
+    description: "Farcaster client",
+    href: "https://quickcast.xyz",
+  },
+  {
+    icon: Twitter,
+    name: "twitt3r.xyz",
+    description: "Twitter on Ethereum",
+    href: "https://github.com/maxpetretta/twitt3r.xyz",
+  },
+  {
+    icon: Keyboard,
+    name: "keymap",
+    description: "ZMK combo keymap",
+    href: "https://github.com/maxpetretta/keymap",
+  },
+]
 </script>
 
 <ul class="grid grid-cols-1 gap-0.5 sm:grid-cols-2 sm:gap-1.5">

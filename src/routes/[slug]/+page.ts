@@ -7,6 +7,7 @@ export async function load({ params }) {
     const content = post.default
 
     return {
+      slug: params.slug,
       metadata: {
         title: metadata.title,
         date: metadata.date,

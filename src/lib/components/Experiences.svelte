@@ -1,17 +1,17 @@
 <script lang="ts">
-  type Experience = {
-    title: string
-    start: string
-    end: string
-    href: string
-  }
+type Experience = {
+  title: string
+  start: string
+  end: string
+  href: string
+}
 
-  const experiences: Experience[] = [
-    { title: "Bracket, Cofounder & CTO", start: "2023", end: "Now", href: "https://bracket.game" },
-    { title: "Worldcoin, Sr. Software Engineer", start: "2022", end: "2023", href: "https://worldcoin.org" },
-    { title: "GEHC, Sr. Software Engineer", start: "2020", end: "2022", href: "https://gehealthcare.com" },
-    { title: "GE, Software Engineer (DTLP)", start: "2018", end: "2020", href: "https://www.ge.com" },
-  ]
+const experiences: Experience[] = [
+  { title: "Bracket, Cofounder & CTO", start: "2023", end: "Now", href: "https://bracket.game" },
+  { title: "Worldcoin, Sr. Software Engineer", start: "2022", end: "2023", href: "https://worldcoin.org" },
+  { title: "GEHC, Sr. Software Engineer", start: "2020", end: "2022", href: "https://gehealthcare.com" },
+  { title: "GE, Software Engineer (DTLP)", start: "2018", end: "2020", href: "https://www.ge.com" },
+]
 </script>
 
 <ul class="space-y-2 text-sm sm:text-base">

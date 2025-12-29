@@ -1,24 +1,24 @@
 <script lang="ts">
-  import { goto } from "$app/navigation"
-  import { page } from "$app/stores"
-  import { sharePageUrl, toggleTheme } from "$lib/commands"
-  import { Button } from "$lib/components/ui/button"
-  import { Switch } from "$lib/components/ui/switch"
-  import type { Flag } from "$lib/stores/flag.svelte"
-  import { Command } from "lucide-svelte"
-  import { getContext } from "svelte"
+import { goto } from "$app/navigation"
+import { page } from "$app/stores"
+import { sharePageUrl, toggleTheme } from "$lib/commands"
+import { Button } from "$lib/components/ui/button"
+import { Switch } from "$lib/components/ui/switch"
+import type { Flag } from "$lib/stores/flag.svelte"
+import { Command } from "lucide-svelte"
+import { getContext } from "svelte"
 
-  const opener = getContext<Flag>("opener")
-  const theme = getContext<Flag>("theme")
-  const isDark = $derived(theme.value)
+const opener = getContext<Flag>("opener")
+const theme = getContext<Flag>("theme")
+const isDark = $derived(theme.value)
 
-  async function handleNameClick() {
-    if ($page.url.pathname === "/") {
-      await sharePageUrl($page.url.href)
-    } else {
-      await goto("/")
-    }
+async function handleNameClick() {
+  if ($page.url.pathname === "/") {
+    await sharePageUrl($page.url.href)
+  } else {
+    await goto("/")
   }
+}
 </script>
 
 <header class="mt-6 md:mt-16">

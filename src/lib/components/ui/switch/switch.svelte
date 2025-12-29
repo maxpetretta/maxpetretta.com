@@ -1,24 +1,19 @@
 <script lang="ts">
-  import { cn } from "$lib/utils.js"
-  import { Switch as SwitchPrimitive } from "bits-ui"
+import { cn } from "$lib/utils.js"
+import { Switch as SwitchPrimitive } from "bits-ui"
 
-  type $$Props = SwitchPrimitive.Props
-  type $$Events = SwitchPrimitive.Events
+type Props = SwitchPrimitive.RootProps
 
-  let className: $$Props["class"] = undefined
-  export let checked: $$Props["checked"] = undefined
-  export { className as class }
+let { class: className, checked = $bindable(false), ...restProps }: Props = $props()
 </script>
 
 <SwitchPrimitive.Root
   bind:checked
   class={cn(
-    "switch peer inline-flex h-[20px] w-[40px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input",
+    "switch peer inline-flex h-[20px] w-[40px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input",
     className,
   )}
-  {...$$restProps}
-  on:click
-  on:keydown
+  {...restProps}
 >
   <SwitchPrimitive.Thumb
     class={cn(

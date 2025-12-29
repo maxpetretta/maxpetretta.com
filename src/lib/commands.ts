@@ -11,7 +11,7 @@ export type CommandType = {
   group: string
   icon?: string
   shortcut?: string[]
-  action: (theme?: Flag) => void // TODO: should flags be passed somewhere else?
+  action: (theme?: Flag) => void
 }
 
 async function gotoPage(path: string) {
@@ -118,20 +118,6 @@ export const COMMANDS: CommandType[] = [
     action: () => gotoSocial("email"),
   },
   {
-    id: "github",
-    name: "GitHub",
-    group: "Contact",
-    shortcut: ["I"],
-    action: () => gotoSocial("github"),
-  },
-  {
-    id: "farcaster",
-    name: "Farcaster",
-    group: "Contact",
-    shortcut: ["F"],
-    action: () => gotoSocial("farcaster"),
-  },
-  {
     id: "twitter",
     name: "Twitter",
     group: "Contact",
@@ -139,11 +125,18 @@ export const COMMANDS: CommandType[] = [
     action: () => gotoSocial("twitter"),
   },
   {
-    id: "linkedin",
-    name: "LinkedIn",
+    id: "substack",
+    name: "Substack",
     group: "Contact",
-    shortcut: ["L"],
-    action: () => gotoSocial("linkedin"),
+    shortcut: ["U"],
+    action: () => gotoSocial("substack"),
+  },
+  {
+    id: "github",
+    name: "GitHub",
+    group: "Contact",
+    shortcut: ["I"],
+    action: () => gotoSocial("github"),
   },
   {
     id: "resume",

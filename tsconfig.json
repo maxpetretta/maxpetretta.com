@@ -1,14 +1,30 @@
 {
   "extends": "./.svelte-kit/tsconfig.json",
   "compilerOptions": {
+    "lib": ["es2022", "dom", "dom.iterable"],
+    "target": "es2022",
+    "module": "esnext",
+    "moduleDetection": "force",
     "allowJs": true,
     "checkJs": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "bundler",
+    "isolatedModules": true,
     "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "sourceMap": true,
+    "verbatimModuleSyntax": true,
+    "noEmit": true,
     "strict": true,
-    "moduleResolution": "bundler"
+    "skipLibCheck": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitReturns": true,
+    "useUnknownInCatchVariables": true,
+    "exactOptionalPropertyTypes": false,
+    "noImplicitOverride": true,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+    "forceConsistentCasingInFileNames": true
   }
 }
