@@ -1,0 +1,119 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "a11y": {
+        "noStaticElementInteractions": "off"
+      },
+      "complexity": {
+        "noExcessiveCognitiveComplexity": "off",
+        "noForEach": "error",
+        "noStaticOnlyClass": "error",
+        "noUselessTernary": "error",
+        "useOptionalChain": "error",
+        "useSimplifiedLogicExpression": "error"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "off",
+        "useHookAtTopLevel": "error",
+        "noUnusedImports": "error",
+        "noUndeclaredVariables": "error",
+        "noUnusedVariables": {
+          "level": "error",
+          "options": {
+            "ignoreRestSiblings": true
+          }
+        },
+        "noConstantCondition": "error",
+        "noUnsafeOptionalChaining": "error",
+        "noSelfAssign": "error",
+        "noUnreachable": "error"
+      },
+      "nursery": {
+        "useSortedClasses": "off"
+      },
+      "performance": {
+        "noBarrelFile": "error",
+        "noReExportAll": "error",
+        "noAccumulatingSpread": "error",
+        "noDelete": "error"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "error",
+        "noDangerouslySetInnerHtmlWithChildren": "error",
+        "noGlobalEval": "error"
+      },
+      "style": {
+        "useCollapsedElseIf": "error",
+        "noNonNullAssertion": "error",
+        "noParameterAssign": "error",
+        "useConst": "error",
+        "useTemplate": "error",
+        "useExponentiationOperator": "error",
+        "useForOf": "error",
+        "useThrowOnlyError": "error",
+        "useImportType": "error",
+        "useExportType": "error"
+      },
+      "suspicious": {
+        "noArrayIndexKey": "warn",
+        "noEmptyBlockStatements": "error",
+        "useAwait": "error",
+        "noUnknownAtRules": "off",
+        "noDoubleEquals": "error",
+        "noDebugger": "error",
+        "noExplicitAny": "error",
+        "noConstEnum": "error",
+        "noFallthroughSwitchClause": "error",
+        "noSelfCompare": "error",
+        "noConstantBinaryExpressions": "error",
+        "noAsyncPromiseExecutor": "error",
+        "noMisleadingCharacterClass": "error",
+        "noUnsafeDeclarationMerging": "error",
+        "noAssignInExpressions": "error",
+        "noConfusingVoidType": "error",
+        "noRedeclare": "error"
+      }
+    }
+  },
+  "files": {
+    "includes": ["**", "!**/bun.lock"]
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "lineWidth": 120,
+    "includes": ["**", "!**/tsconfig.base.json", "!**/routeTree.gen.ts"]
+  },
+  "javascript": {
+    "formatter": {
+      "indentStyle": "space",
+      "lineWidth": 120,
+      "semicolons": "asNeeded"
+    },
+    "globals": ["Bun"]
+  },
+  "json": {
+    "parser": {
+      "allowComments": true
+    },
+    "formatter": {
+      "indentStyle": "space",
+      "lineWidth": 120
+    }
+  },
+  "css": {
+    "parser": {
+      "cssModules": false,
+      "tailwindDirectives": true
+    }
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true,
+    "defaultBranch": "master"
+  }
+}

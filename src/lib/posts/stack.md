@@ -64,7 +64,7 @@ Not to mention, I always found CSS pretty cumbersome. For example, here's what i
     border-width: 2px;
     padding: 1rem;
   }
-  .container--centered: {
+  .container--centered {
     justify-content: centered;
   }
   .btn {
@@ -107,7 +107,7 @@ Another aspect that you might consider is "How easy is it to embed a custom comp
 
 [Markdown + JSX = MDX](https://mdxjs.com/). All the goodness of Markdown, plus the flexibility of JSX, in one file.
 
-_Note: there used to be `<Badge>` components here in a previous version of this site_
+_Note: there used to be `&lt;Badge&gt;` components here in a previous version of this site_
 
 In order to insert the above badges, here's what my Markdown looks like:
 

@@ -2,9 +2,6 @@
 title: Hello World
 date: '2022-02-04'
 ---
-<script lang="ts">
-  import { Tweet } from "sveltekit-embed"
-</script>
 
 <img src="/images/hello.png" alt="Classic hello world in JavaScript" width="500" height="250" loading="eager" class="mx-auto">
 
@@ -20,7 +17,7 @@ We have hobbies and fears and dreams and much more. I'm still figuring out who I
 
 ## Why the website?
 
-At this point, I've been online for most of my life. I've spent most of that time as a [lurker](https://en.wikipedia.org/wiki/Lurker), passively consuming the content of others, but never really creating my own. This is a common phenomenon, so much so that it has been described as the ["1% rule"](<https://en.wikipedia.org/wiki/1%25_rule_(Internet_culture)>); only a small handful of users create the posts that the rest of us enjoy on a daily basis.
+At this point, I've been online for most of my life. I've spent most of that time as a [lurker](https://en.wikipedia.org/wiki/Lurker), passively consuming the content of others, but never really creating my own. This is a common phenomenon, so much so that it has been described as the ["1% rule"](https://en.wikipedia.org/wiki/1%25_rule_(Internet_culture)); only a small handful of users create the posts that the rest of us enjoy on a daily basis.
 
 I've been aware of this quality in myself for quite some time. In fact, I built this blog over a year ago, at the end of 2020. But it's sat empty all this time. I think much of that stems from a crippling fear of [being wrong on the internet](https://xkcd.com/386/).
 
@@ -51,8 +48,6 @@ It's pretty tough for me to come up with one or two categories that work for all
 ## Wrapping up
 
 This year, instead of setting goals and spending the entire year trying to achieve them, I'm trying something different:
-
-<Tweet tweetLink="maxpetretta/status/1483882167528669184" />
 
 Writing is one of the habits I've decided to focus on. I'm hoping that by sharing what I'm learning, I can reach a better understanding and maybe help others along the way. So cheers to 2022, let's see where we end up!
 

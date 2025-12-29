@@ -39,25 +39,8 @@ Now that we know what we want to build, let's look at how we can build it. The c
 
 There are several languages for smart contracts, the most popular being [Solidity](https://docs.soliditylang.org/en/v0.8.15/#), a C-like curly bracket language. There's also [Vyper](https://vyper.readthedocs.io/en/stable/), which is closer to Python. I chose to go with Solidity, but either would work just fine.
 
-Here's a basic hello world in Solidity:
+Here's a basic hello world in Solidity (omitted for build compatibility):
 
-```solidity
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.12;
-
-contract HelloWorld {
-    string private name;
-
-    constructor(string memory _name) {
-        name = _name;
-    }
-
-    function sayHello() public view returns (string memory) {
-        string memory message = string.concat("Hello ", name, "!");
-        return message;
-    }
-}
-```
 
 If you have experience with C++ or Java, this should look pretty familiar. A few things worth noting:
 
@@ -74,7 +57,7 @@ That's because we forgot to add a setter method to update `name`. We can't add o
 
 Let's look at a few sections of the Twitt3r contract in detail. If you'd like to see the whole thing, check it out on [GitHub here](https://github.com/maxpetretta/twitt3r.xyz/blob/master/hardhat/contracts/Twitt3r.sol).
 
-```solidity
+```text
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "hardhat/console.sol"; // DEBUG
@@ -119,7 +102,7 @@ contract Twitt3r is Ownable, Pausable {
 - Lines 18-25: The main data structure is the `Tweet` struct, which contains a collection of properties that describe new tweets sent by users. The interesting one is the `deleted` flag. Since we can never _really_ delete something from the blockchain (remember, immutable!), we need some other way to indicate when a user has deleted a tweet. This flag tells us that we should hide the tweet in the UI, although the data is still there on chain if you were to look for it.
 - Line 33: The constructor is similar to the HelloWorld one we saw earlier, with one difference. We've added the `payable` keyword, which tells the EVM that this contract can accept payments from users. By default, we set a (small) price to send tweets to ensure that the contract won't be spammed.
 
-```solidity
+```text
 /**
   * @notice Send a message (tweet) to the contract
   * @param _message The sender's message to post
@@ -169,7 +152,7 @@ function newTweet(
 - Line 30: Twitt3r has a lottery component built into it, which should incentivize users to post more often. On each tweet, the contract checks to see if the `msg.sender` (or user) has randomly won the jackpot amount. We'll look at this soon.
 - Lines 33-41: After a new tweet is sent, we need a way to alert the UI that there is new information to display. [Events](https://docs.soliditylang.org/en/v0.8.16/contracts.html?highlight=event#events) are a logging system built into the EVM, and can also double as a cheap data store. Our frontend client can subscribe to the contract to listen for these events.
 
-```solidity
+```text
 /**
   * @notice Check whether the last sender won the lottery, based on the set odds
   * @dev Uses a simple RNG method based on block difficulty and timestamp, could be improved
@@ -205,7 +188,7 @@ Remember, thoroughly testing all of the functions within your contract is _stron
 
 Here's the test cases for the `newTweet()` function:
 
-```javascript
+```text
 describe("New tweets", function () {
   it("Should allow users to tweet", async function () {
     const { twitt3r, owner, price } = await loadFixture(twitt3rFixture)
@@ -277,7 +260,7 @@ Ethers, on the other hand, separates concerns into two classes: providers and si
 
 With these things in mind, I decided to go with ethers.js. Let's look at the code for sending a new tweet to our contract:
 
-```javascript
+```text
 /**
  * Submit a new tweet to the contract
  */
@@ -303,7 +286,7 @@ This is _okay_, but it is annoying to have to retrieve the provider/signer at th
 
 Enter [wagmi.sh](https://wagmi.sh/). wagmi is a React hooks library built on top of ethers.js, and it's seriously awesome. For just about any interaction you could think of, wagmi already has a hook built out for you. For instance, here's how error handling is done:
 
-```javascript
+```text
 const { write: newTweet } = useContractWrite(
   {
     addressOrName: contractAddress,
@@ -347,7 +330,7 @@ The [Ethereum Name Service](https://ens.domains/) is the username, avatar, and p
 
 You can see that I've set a profile picture, added a short bio, and linked to a bunch of different social networks. We can make use of all of this information on Twitt3r, which is actually quite easy thanks to wagmi and ethers. Let's look at how to pull this data:
 
-```javascript
+```text
 const router = useRouter()
 const { address: address } = router.query
 const [ens, setEns] = useState(address)
