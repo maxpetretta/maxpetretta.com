@@ -37,7 +37,6 @@ type Props = ButtonPrimitive.Props & {
 type Events = ButtonPrimitive.Events
 
 export {
-  //
   Root as Button,
   buttonVariants,
   Root,
