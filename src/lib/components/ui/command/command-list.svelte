@@ -3,7 +3,7 @@
   import { Command as CommandPrimitive } from "cmdk-sv"
 
   type $$Props = CommandPrimitive.ListProps
-  let className: string | undefined | null = undefined
+  let className: $$Props["class"] = undefined
   export { className as class }
 </script>
 

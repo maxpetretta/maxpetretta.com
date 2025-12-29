@@ -10,7 +10,6 @@
   import { Toaster } from "svelte-sonner"
 
   const { data, children } = $props()
-  setContext("posts", data.posts)
 
   const opener = createFlag()
   setContext("opener", opener)
@@ -22,6 +21,7 @@
   const themeColor = $derived(theme.value ? "#09090b" : "#ffffff")
 
   $effect(() => {
+    if (!browser) return
     const themeColorMetaTag = document.querySelector('meta[name="theme-color"]') as HTMLMetaElement | null
     if (themeColorMetaTag) themeColorMetaTag.content = themeColor
   })
@@ -36,6 +36,6 @@
 
   <Footer />
 
-  <CommandMenu />
+  <CommandMenu posts={data.posts} />
   <Toaster theme={themeName} />
 </div>

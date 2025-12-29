@@ -2,11 +2,10 @@
   import { cn } from "$lib/utils.js"
   import { Switch as SwitchPrimitive } from "bits-ui"
 
-  type $$Props = SwitchPrimitive.Props
-  type $$Events = SwitchPrimitive.Events
+  type $$Props = SwitchPrimitive.RootProps
 
   let className: $$Props["class"] = undefined
-  export let checked: $$Props["checked"] = undefined
+  export let checked = false
   export { className as class }
 </script>
 
@@ -17,8 +16,6 @@
     className,
   )}
   {...$$restProps}
-  on:click
-  on:keydown
 >
   <SwitchPrimitive.Thumb
     class={cn(

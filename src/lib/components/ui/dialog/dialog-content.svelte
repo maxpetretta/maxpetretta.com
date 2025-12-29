@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { cn, flyAndScale } from "$lib/utils.js"
+  import { cn } from "$lib/utils.js"
   import { Dialog as DialogPrimitive } from "bits-ui"
   import X from "lucide-svelte/icons/x"
   import * as Dialog from "./index.js"
@@ -7,18 +7,12 @@
   type $$Props = DialogPrimitive.ContentProps
 
   let className: $$Props["class"] = undefined
-  export let transition: $$Props["transition"] = flyAndScale
-  export let transitionConfig: $$Props["transitionConfig"] = {
-    duration: 200,
-  }
   export { className as class }
 </script>
 
 <Dialog.Portal>
   <Dialog.Overlay />
   <DialogPrimitive.Content
-    {transition}
-    {transitionConfig}
     class={cn(
       "fixed left-[50%] top-[25vh] z-50 grid w-[94%] max-w-lg translate-x-[-50%] items-start gap-4 rounded-lg border bg-background p-6 shadow-lg md:w-full",
       className,

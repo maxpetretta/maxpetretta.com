@@ -29,20 +29,16 @@ const buttonVariants = tv({
 type Variant = VariantProps<typeof buttonVariants>["variant"]
 type Size = VariantProps<typeof buttonVariants>["size"]
 
-type Props = ButtonPrimitive.Props & {
+type Props = ButtonPrimitive.RootProps & {
   variant?: Variant
   size?: Size
 }
-
-type Events = ButtonPrimitive.Events
 
 export {
   //
   Root as Button,
   buttonVariants,
   Root,
-  type Events as ButtonEvents,
   type Props as ButtonProps,
-  type Events,
   type Props,
 }

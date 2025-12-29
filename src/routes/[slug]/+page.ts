@@ -1,12 +1,14 @@
 import { error } from "@sveltejs/kit"
+import type { PageLoad } from "./$types"
 
-export async function load({ params }) {
+export const load: PageLoad = async ({ params }) => {
   try {
     const post = await import(`../../lib/posts/${params.slug}.md`)
     const metadata = post.metadata
     const content = post.default
 
     return {
+      slug: params.slug,
       metadata: {
         title: metadata.title,
         date: metadata.date,
@@ -14,6 +16,7 @@ export async function load({ params }) {
       content,
     }
   } catch (err) {
-    error(404, err as string)
+    const message = err instanceof Error ? err.message : "Not found"
+    throw error(404, message)
   }
 }

@@ -1,14 +1,19 @@
 <script lang="ts">
+  import SubstackEmbed from "$lib/components/SubstackEmbed.svelte"
   import type { Post } from "$lib/utils"
   import { formatDate } from "$lib/utils"
-  import { getContext } from "svelte"
 
-  const posts = getContext<Post[]>("posts")
+  const { data } = $props()
+  const posts = $derived(data.posts as Post[])
 </script>
 
 <section class="mt-6">
   <h1 class="font-medium">Blog</h1>
   <p class="text-muted-foreground">Posts, notes, and thoughts</p>
+
+  <div class="mt-6">
+    <SubstackEmbed />
+  </div>
 
   <ul class="mt-6 space-y-2 text-sm sm:text-base">
     {#each posts as { path, metadata }}

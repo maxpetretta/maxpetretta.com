@@ -4,9 +4,9 @@
 
   type $$Props = CommandPrimitive.CommandProps
 
-  export let value: $$Props["value"] = undefined
+  export let value = ""
 
-  let className: string | undefined | null = undefined
+  let className: $$Props["class"] = undefined
   export { className as class }
 </script>
 

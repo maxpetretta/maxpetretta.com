@@ -125,13 +125,6 @@ export const COMMANDS: CommandType[] = [
     action: () => gotoSocial("github"),
   },
   {
-    id: "farcaster",
-    name: "Farcaster",
-    group: "Contact",
-    shortcut: ["F"],
-    action: () => gotoSocial("farcaster"),
-  },
-  {
     id: "twitter",
     name: "Twitter",
     group: "Contact",
@@ -139,11 +132,11 @@ export const COMMANDS: CommandType[] = [
     action: () => gotoSocial("twitter"),
   },
   {
-    id: "linkedin",
-    name: "LinkedIn",
+    id: "substack",
+    name: "Substack",
     group: "Contact",
-    shortcut: ["L"],
-    action: () => gotoSocial("linkedin"),
+    shortcut: ["U"],
+    action: () => gotoSocial("substack"),
   },
   {
     id: "resume",

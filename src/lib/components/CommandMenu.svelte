@@ -7,7 +7,7 @@
   import type { Post } from "$lib/utils"
   import { getContext } from "svelte"
 
-  const posts = getContext<Post[]>("posts")
+  const { posts } = $props<{ posts: Post[] }>()
   const commands = $state(COMMANDS)
 
   // split commands into their respective groups
