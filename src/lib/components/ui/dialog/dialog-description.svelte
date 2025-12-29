@@ -1,13 +1,16 @@
 <script lang="ts">
-  import { Dialog as DialogPrimitive } from "bits-ui"
   import { cn } from "$lib/utils.js"
+  import { Dialog as DialogPrimitive } from "bits-ui"
+  import type { Snippet } from "svelte"
 
-  type $$Props = DialogPrimitive.DescriptionProps
+  type Props = {
+    class?: string
+    children?: Snippet
+  }
 
-  let className: $$Props["class"] = undefined
-  export { className as class }
+  let { class: className, children, ...restProps }: Props = $props()
 </script>
 
-<DialogPrimitive.Description class={cn("text-sm text-muted-foreground", className)} {...$$restProps}>
-  <slot />
+<DialogPrimitive.Description class={cn("text-sm text-muted-foreground", className)} {...restProps}>
+  {@render children?.()}
 </DialogPrimitive.Description>

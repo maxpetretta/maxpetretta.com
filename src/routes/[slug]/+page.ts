@@ -10,10 +10,11 @@ export async function load({ params }) {
       metadata: {
         title: metadata.title,
         date: metadata.date,
+        slug: params.slug,
       },
       content,
     }
-  } catch (err) {
-    error(404, err as string)
+  } catch (_err) {
+    error(404, `Post not found: ${params.slug}`)
   }
 }

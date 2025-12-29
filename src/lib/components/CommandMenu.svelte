@@ -8,17 +8,17 @@
   import { getContext } from "svelte"
 
   const posts = getContext<Post[]>("posts")
-  const commands = $state(COMMANDS)
+  const commands = $state([...COMMANDS])
 
-  // split commands into their respective groups
   const groups = $derived(
     commands.reduce<Record<string, CommandType[]>>((group, command) => {
-      ;(group[command.group] = group[command.group] || []).push(command)
+      const g = group[command.group] ?? []
+      g.push(command)
+      group[command.group] = g
       return group
     }, {}),
   )
 
-  // map shortcut keys to commands for performance
   const shortcuts = $derived(
     commands.reduce<Record<string, CommandType>>((shortcut, command) => {
       if (command.shortcut) {
@@ -34,45 +34,38 @@
   let lastKey = $state("")
 
   function handleKeydown(e: KeyboardEvent) {
-    // always allow escape key
     if (e.key === "Escape" && isOpen) {
       e.preventDefault()
       opener.toggle(false)
       return
     }
 
-    // open command bar on command/ctrl + k
     if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
       e.preventDefault()
       opener.toggle()
     }
 
-    // run shortcut for given key or chord
     if (!isOpen) {
       const chord = `${lastKey}${e.key}`.trim().toUpperCase()
       const command = shortcuts[chord]
       if (command) runCommand(command.id, opener, theme)
     }
 
-    // save the keypress for chords
     lastKey = e.key
 
-    // clear the last key after a timeout
     setTimeout(() => {
       lastKey = ""
     }, 500)
   }
 
-  // pull post commands on mount
   $effect(() => {
-    async function initCommands(posts: Post[]) {
-      const postCommands = await getPostCommands(posts)
+    async function initCommands(postList: Post[]) {
+      const postCommands = await getPostCommands(postList)
       commands.push(...postCommands)
     }
     initCommands(posts)
   })
 
-  // add keyboard listener on page mount
   $effect(() => {
     if (!browser) return
     document.addEventListener("keydown", handleKeydown)
@@ -83,15 +76,14 @@
 </script>
 
 {#if opener}
-  <!-- see: https://github.com/huntabyte/bits-ui/issues/164 -->
   <Command.Dialog open={isOpen} onOpenChange={opener.toggle}>
     <Command.Input placeholder="Type a command or search..." />
     <Command.List>
       <Command.Empty>No results found.</Command.Empty>
 
-      {#each Object.entries(groups) as [group, commands], index}
+      {#each Object.entries(groups) as [group, cmds], index}
         <Command.Group heading={group}>
-          {#each commands as command}
+          {#each cmds as command}
             <CommandItem {command} {opener} {theme} />
           {/each}
         </Command.Group>

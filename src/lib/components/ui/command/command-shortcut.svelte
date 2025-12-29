@@ -1,13 +1,15 @@
 <script lang="ts">
-  import type { HTMLAttributes } from "svelte/elements"
   import { cn } from "$lib/utils.js"
+  import type { Snippet } from "svelte"
 
-  type $$Props = HTMLAttributes<HTMLSpanElement>
+  type Props = {
+    class?: string
+    children?: Snippet
+  }
 
-  let className: string | undefined | null = undefined
-  export { className as class }
+  let { class: className, children, ...restProps }: Props = $props()
 </script>
 
-<span class={cn("ml-auto text-xs tracking-widest text-muted-foreground", className)} {...$$restProps}>
-  <slot />
+<span class={cn("ml-auto text-xs tracking-widest text-muted-foreground", className)} {...restProps}>
+  {@render children?.()}
 </span>

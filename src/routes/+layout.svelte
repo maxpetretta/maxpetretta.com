@@ -1,7 +1,6 @@
 <script lang="ts">
   import "$/app.css"
   import { browser } from "$app/environment"
-
   import CommandMenu from "$lib/components/CommandMenu.svelte"
   import Footer from "$lib/components/Footer.svelte"
   import Header from "$lib/components/Header.svelte"

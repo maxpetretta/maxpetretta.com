@@ -1,9 +1,9 @@
+import { toast } from "svelte-sonner"
 import { browser } from "$app/environment"
 import { goto } from "$app/navigation"
 import { RESUME, SOCIALS } from "$lib/constants"
 import type { Flag } from "$lib/stores/flag.svelte"
 import type { Post } from "$lib/utils"
-import { toast } from "svelte-sonner"
 
 export type CommandType = {
   id: string
@@ -11,7 +11,7 @@ export type CommandType = {
   group: string
   icon?: string
   shortcut?: string[]
-  action: (theme?: Flag) => void // TODO: should flags be passed somewhere else?
+  action: (theme?: Flag) => void
 }
 
 async function gotoPage(path: string) {
@@ -36,7 +36,7 @@ export async function sharePageUrl(url: string) {
 }
 
 export function toggleTheme(theme?: Flag) {
-  if (!browser || !theme) return
+  if (!(browser && theme)) return
   document.documentElement.classList.add("no-transition")
 
   theme.toggle()
@@ -53,7 +53,7 @@ function secretThirdThing() {
 
 export function runCommand(id: string, opener: Flag, theme: Flag) {
   const command = COMMANDS.find((cmd) => cmd.id === id)
-  if (!command || !opener) return
+  if (!(command && opener)) return
 
   opener.toggle(false)
   command.action(theme)
@@ -62,13 +62,16 @@ export function runCommand(id: string, opener: Flag, theme: Flag) {
 export async function getPostCommands(posts: Post[]) {
   const postCommands: CommandType[] = []
   for (const post of posts) {
-    const command = {
-      id: `${post.path.split("/")[1]}`,
-      name: post.metadata.title,
-      group: "Posts",
-      action: () => gotoPage(`${post.path}`),
+    const slug = post.path.split("/")[1]
+    if (slug) {
+      const command = {
+        id: slug,
+        name: post.metadata.title,
+        group: "Posts",
+        action: () => gotoPage(post.path),
+      }
+      postCommands.push(command)
     }
-    postCommands.push(command)
   }
 
   return postCommands
@@ -118,20 +121,6 @@ export const COMMANDS: CommandType[] = [
     action: () => gotoSocial("email"),
   },
   {
-    id: "github",
-    name: "GitHub",
-    group: "Contact",
-    shortcut: ["I"],
-    action: () => gotoSocial("github"),
-  },
-  {
-    id: "farcaster",
-    name: "Farcaster",
-    group: "Contact",
-    shortcut: ["F"],
-    action: () => gotoSocial("farcaster"),
-  },
-  {
     id: "twitter",
     name: "Twitter",
     group: "Contact",
@@ -139,11 +128,18 @@ export const COMMANDS: CommandType[] = [
     action: () => gotoSocial("twitter"),
   },
   {
-    id: "linkedin",
-    name: "LinkedIn",
+    id: "substack",
+    name: "Substack",
     group: "Contact",
-    shortcut: ["L"],
-    action: () => gotoSocial("linkedin"),
+    shortcut: ["U"],
+    action: () => gotoSocial("substack"),
+  },
+  {
+    id: "github",
+    name: "GitHub",
+    group: "Contact",
+    shortcut: ["I"],
+    action: () => gotoSocial("github"),
   },
   {
     id: "resume",
