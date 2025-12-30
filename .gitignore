@@ -25,3 +25,7 @@ vite.config.ts.timestamp-*
 # Misc
 .DS_Store
 temp
+
+# Astro
+.astro/
+dist/

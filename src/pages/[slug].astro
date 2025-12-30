@@ -1,0 +1,35 @@
+---
+import { getCollection, render } from "astro:content"
+import Layout from "../layouts/Layout.astro"
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts")
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }))
+}
+
+const { post } = Astro.props
+const { Content } = await render(post)
+
+function formatDate(dateString: string): string {
+  return new Date(dateString).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" })
+}
+---
+
+<Layout title={`${post.data.title} | Max Petretta`} description={post.data.title}>
+  <article class="prose prose-stone dark:prose-invert prose-headings:text-base prose-headings:font-medium">
+    <h1 class="-mb-0.5 mt-6">{post.data.title}</h1>
+    <time class="mb-6 text-muted-foreground">{formatDate(post.data.date)}</time>
+
+    <Content />
+
+    <a
+      href="/blog"
+      class="mx-auto my-12 block w-fit rounded-md border border-input bg-background px-4 py-2 text-sm font-medium no-underline shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+    >
+      Read more posts
+    </a>
+  </article>
+</Layout>

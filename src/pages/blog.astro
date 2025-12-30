@@ -1,0 +1,41 @@
+---
+import { getCollection } from "astro:content"
+import Layout from "../layouts/Layout.astro"
+
+const posts = await getCollection("posts")
+const sortedPosts = posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+
+function formatDate(dateString: string, options: Intl.DateTimeFormatOptions = { year: "numeric", month: "long", day: "numeric" }): string {
+  return new Date(dateString).toLocaleDateString(undefined, options)
+}
+---
+
+<Layout title="Blog | Max Petretta" description="Posts, notes, and thoughts">
+  <section class="mt-6">
+    <h1 class="font-medium">Blog</h1>
+    <p class="text-muted-foreground">Posts, notes, and thoughts</p>
+
+    <ul class="mt-6 space-y-2 text-sm sm:text-base">
+      {
+        sortedPosts.map((post) => (
+          <li>
+            <a
+              href={`/${post.id}`}
+              class="clickable -mx-2 block rounded-sm px-2 py-1.5 hover:bg-accent hover:text-accent-foreground"
+            >
+              <div class="flex justify-between border-b border-dotted border-muted-foreground">
+                <span>{post.data.title}</span>
+                <span class="whitespace-nowrap text-left font-mono text-muted-foreground sm:hidden">
+                  {formatDate(post.data.date, { year: "numeric", month: "short", day: "numeric" })}
+                </span>
+                <span class="hidden whitespace-nowrap text-left font-mono text-muted-foreground sm:inline">
+                  {formatDate(post.data.date)}
+                </span>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Layout>

@@ -3,7 +3,7 @@ import typography from "@tailwindcss/typography"
 /** @type {import('tailwindcss').Config} */
 const config = {
   darkMode: ["class"],
-  content: ["./src/**/*.{html,js,ts,svelte}"],
+  content: ["./src/**/*.{astro,html,js,ts,md}"],
   safelist: ["dark"],
   future: {
     hoverOnlyWhenSupported: true,

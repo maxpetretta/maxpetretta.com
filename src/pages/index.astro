@@ -1,0 +1,36 @@
+---
+import Layout from "../layouts/Layout.astro"
+import Projects from "../components/Projects.astro"
+import Experiences from "../components/Experiences.astro"
+---
+
+<Layout>
+  <section class="mt-6 text-muted-foreground">
+    <h2>Software Engineer</h2>
+    <h3>Detroit, MI</h3>
+  </section>
+
+  <section class="mt-16 space-y-5">
+    <h3 class="mb-5 font-medium">About</h3>
+    <p>I didn't set out to become a web developer.</p>
+    <p>But what I found was the most open, powerful system for building applications in the world.</p>
+    <p>That's worth sticking around for.</p>
+  </section>
+
+  <section class="mt-16">
+    <h3 class="mb-5 font-medium">Projects</h3>
+    <Projects />
+  </section>
+
+  <section class="mt-16">
+    <h3 class="mb-5 font-medium">Experience</h3>
+    <Experiences />
+  </section>
+
+  <a
+    href="/blog"
+    class="mx-auto my-12 block w-fit rounded-md border border-input bg-background px-4 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+  >
+    Check out the blog
+  </a>
+</Layout>

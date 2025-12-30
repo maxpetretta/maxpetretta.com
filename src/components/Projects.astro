@@ -1,0 +1,56 @@
+---
+const projects = [
+  {
+    icon: "app-window",
+    name: "maxpetretta.com",
+    description: "Astro blog",
+    href: "https://github.com/maxpetretta/maxpetretta.com",
+  },
+  {
+    icon: "zap",
+    name: "quickcast.xyz",
+    description: "Farcaster client",
+    href: "https://quickcast.xyz",
+  },
+  {
+    icon: "twitter",
+    name: "twitt3r.xyz",
+    description: "Twitter on Ethereum",
+    href: "https://github.com/maxpetretta/twitt3r.xyz",
+  },
+  {
+    icon: "keyboard",
+    name: "keymap",
+    description: "ZMK combo keymap",
+    href: "https://github.com/maxpetretta/keymap",
+  },
+]
+
+const icons: Record<string, string> = {
+  "app-window": `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline size-4 stroke-2 sm:absolute sm:right-3 sm:top-3 sm:size-[1.375rem]"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M10 4v4"/><path d="M2 8h20"/><path d="M6 4v4"/></svg>`,
+  zap: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline size-4 stroke-2 sm:absolute sm:right-3 sm:top-3 sm:size-[1.375rem]"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>`,
+  twitter: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline size-4 stroke-2 sm:absolute sm:right-3 sm:top-3 sm:size-[1.375rem]"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>`,
+  keyboard: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline size-4 stroke-2 sm:absolute sm:right-3 sm:top-3 sm:size-[1.375rem]"><path d="M10 8h.01"/><path d="M12 12h.01"/><path d="M14 8h.01"/><path d="M16 12h.01"/><path d="M18 8h.01"/><path d="M6 8h.01"/><path d="M7 16h10"/><path d="M8 12h.01"/><rect width="20" height="16" x="2" y="4" rx="2"/></svg>`,
+}
+---
+
+<ul class="grid grid-cols-1 gap-0.5 sm:grid-cols-2 sm:gap-1.5">
+  {
+    projects.map(({ icon, name, description, href }) => (
+      <li class="clickable bg-muted first:rounded-t-lg last:rounded-b-lg hover:text-card-foreground hover:brightness-95 dark:hover:brightness-125 sm:rounded-lg">
+        <a
+          href={href}
+          target="_blank"
+          rel="noreferrer"
+          class="relative flex items-center justify-between p-2.5 sm:flex-col sm:items-start sm:px-3.5"
+        >
+          <div class="flex items-center">
+            <Fragment set:html={icons[icon]} />
+            <span class="ml-2 font-medium sm:ml-0">{name}</span>
+          </div>
+          <span class="font-mono text-sm text-muted-foreground sm:text-base">{description}</span>
+        </a>
+      </li>
+    ))
+  }
+</ul>
