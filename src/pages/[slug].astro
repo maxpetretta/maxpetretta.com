@@ -1,35 +1,58 @@
 ---
-import { getCollection, render } from "astro:content"
-import Layout from "../layouts/Layout.astro"
+import { getCollection, render, type CollectionEntry } from "astro:content"
+import Layout from "@/layouts/Layout.astro"
+import SubstackEmbed from "@/components/SubstackEmbed.astro"
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts")
-  return posts.map((post) => ({
+  return posts.map((post: CollectionEntry<"posts">) => ({
     params: { slug: post.id },
     props: { post },
   }))
 }
 
-const { post } = Astro.props
+type Props = { post: CollectionEntry<"posts"> }
+const { post } = Astro.props as Props
 const { Content } = await render(post)
+const ogImage = new URL(`/og/${post.id}.png`, Astro.site ?? "https://maxpetretta.com").toString()
 
 function formatDate(dateString: string): string {
   return new Date(dateString).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" })
 }
 ---
 
-<Layout title={`${post.data.title} | Max Petretta`} description={post.data.title}>
-  <article class="prose prose-stone dark:prose-invert prose-headings:text-base prose-headings:font-medium">
+<Layout title={`${post.data.title} | Max Petretta`} description={post.data.title} image={ogImage}>
+  <div
+    id="progress-bar"
+    class="fixed top-0 left-0 z-50 h-1 w-0 bg-foreground"
+  ></div>
+
+  <article class="prose prose-stone dark:prose-invert prose-headings:font-medium">
     <h1 class="-mb-0.5 mt-6">{post.data.title}</h1>
-    <time class="mb-6 text-muted-foreground">{formatDate(post.data.date)}</time>
+    <time class="text-muted-foreground">{formatDate(post.data.date)}</time>
 
     <Content />
-
-    <a
-      href="/blog"
-      class="mx-auto my-12 block w-fit rounded-md border border-input bg-background px-4 py-2 text-sm font-medium no-underline shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"
-    >
-      Read more posts
-    </a>
   </article>
+
+  <SubstackEmbed class="mt-12 mb-6" />
 </Layout>
+
+<script>
+  function initProgressBar() {
+    const progressBar = document.getElementById("progress-bar")
+    if (!progressBar) return
+
+    function updateProgress() {
+      const scrollTop = window.scrollY
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0
+      progressBar!.style.width = `${progress}%`
+    }
+
+    window.addEventListener("scroll", updateProgress, { passive: true })
+    updateProgress()
+  }
+
+  initProgressBar()
+  document.addEventListener("astro:after-swap", initProgressBar)
+</script>

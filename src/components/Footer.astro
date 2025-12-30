@@ -1,10 +1,9 @@
 ---
 const socials = [
-  { name: "email", href: "mailto:m@maxp.co" },
-  { name: "github", href: "https://github.com/maxpetretta" },
-  { name: "farcaster", href: "https://warpcast.com/maxp.eth" },
-  { name: "twitter", href: "https://twitter.com/maxpetretta" },
-  { name: "linkedin", href: "https://linkedin.com/in/maxpetretta" },
+  { name: "email", href: "mailto:m@maxp.co", external: false },
+  { name: "twitter", href: "https://twitter.com/maxpetretta", external: true },
+  { name: "substack", href: "https://maxpetretta.substack.com", external: true },
+  { name: "github", href: "https://github.com/maxpetretta", external: true },
 ]
 ---
 
@@ -14,9 +13,9 @@ const socials = [
       socials.map((social) => (
         <a
           href={social.href}
-          target="_blank"
-          rel="noreferrer"
-          class="inline-flex h-9 items-center justify-center rounded-md px-3 text-sm font-medium text-zinc-500 transition-colors hover:bg-accent hover:text-accent-foreground dark:text-zinc-400"
+          target={social.external ? "_blank" : undefined}
+          rel={social.external ? "noreferrer" : undefined}
+          class="inline-flex h-9 items-center justify-center rounded-md px-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
         >
           {social.name}
         </a>

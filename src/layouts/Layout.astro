@@ -1,15 +1,18 @@
 ---
-import Header from "../components/Header.astro"
-import Footer from "../components/Footer.astro"
-import "../styles/global.css"
+import Header from "@/components/Header.astro"
+import Footer from "@/components/Footer.astro"
+import "@/styles/global.css"
 
 interface Props {
   title?: string
   description?: string
+  image?: string
 }
 
-const { title = "Max Petretta", description = "Software Engineer" } = Astro.props
+const { title = "Max Petretta", description = "Software Engineer", image } = Astro.props
 const pathname = Astro.url.pathname
+const canonicalUrl = new URL(pathname, Astro.site ?? "https://maxpetretta.com")
+const ogImageUrl = image ?? new URL("/og.png", Astro.site ?? "https://maxpetretta.com").toString()
 ---
 
 <!doctype html>
@@ -32,15 +35,13 @@ const pathname = Astro.url.pathname
       document.head.appendChild(themeColorMetaTag)
     </script>
 
-    <!-- Fonts -->
-    <link rel="preload" href="/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/MonaspaceArgonVarVF.woff2" as="font" type="font/woff2" crossorigin />
 
     <!-- Metadata -->
     <title>{title}</title>
     <meta name="author" content="Max Petretta" />
     <meta name="description" content={description} />
     <meta name="robots" content="follow, index" />
+    <link rel="canonical" href={canonicalUrl} />
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png?v=2" />
@@ -55,7 +56,8 @@ const pathname = Astro.url.pathname
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://maxpetretta.com" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
 
     <!-- Twitter -->
     <meta name="twitter:site" content="@maxpetretta" />
@@ -63,6 +65,7 @@ const pathname = Astro.url.pathname
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImageUrl} />
   </head>
   <body>
     <div class="mx-auto flex min-h-screen max-w-2xl flex-col px-5 md:px-0">
@@ -74,5 +77,8 @@ const pathname = Astro.url.pathname
 
       <Footer />
     </div>
+
+    <!-- Twitter embeds -->
+    <script is:inline async src="https://platform.twitter.com/widgets.js"></script>
   </body>
 </html>

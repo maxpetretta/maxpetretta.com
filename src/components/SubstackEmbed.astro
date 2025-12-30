@@ -1,0 +1,51 @@
+---
+interface Props {
+  label?: string
+  class?: string
+}
+
+const { label = "Subscribe for updates", class: className } = Astro.props
+
+const baseUrl = "https://maxpetretta.substack.com/embed"
+---
+
+<div class:list={["substack-embed", className]}>
+  <p class="mb-3 text-sm text-muted-foreground">{label}</p>
+  <div class="overflow-hidden rounded-lg border border-border">
+    <iframe
+      id="substack-iframe"
+      src={baseUrl}
+      data-light-src={baseUrl}
+      data-dark-src={`${baseUrl}?dark=true`}
+      width="100%"
+      height="150"
+      style="display:block;"
+    ></iframe>
+  </div>
+</div>
+
+<script>
+  function updateSubstackTheme() {
+    const iframe = document.getElementById("substack-iframe") as HTMLIFrameElement | null
+    if (!iframe) return
+
+    const isDark = document.documentElement.classList.contains("dark")
+    const newSrc = isDark ? iframe.dataset.darkSrc : iframe.dataset.lightSrc
+    if (newSrc && iframe.src !== newSrc) {
+      iframe.src = newSrc
+    }
+  }
+
+  updateSubstackTheme()
+
+  const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.attributeName === "class") {
+        updateSubstackTheme()
+      }
+    }
+  })
+
+  observer.observe(document.documentElement, { attributes: true })
+  document.addEventListener("astro:after-swap", updateSubstackTheme)
+</script>

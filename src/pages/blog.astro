@@ -1,11 +1,15 @@
 ---
-import { getCollection } from "astro:content"
-import Layout from "../layouts/Layout.astro"
+import { getCollection, type CollectionEntry } from "astro:content"
+import Layout from "@/layouts/Layout.astro"
+import SubstackEmbed from "@/components/SubstackEmbed.astro"
 
-const posts = await getCollection("posts")
+const posts: CollectionEntry<"posts">[] = await getCollection("posts")
 const sortedPosts = posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
 
-function formatDate(dateString: string, options: Intl.DateTimeFormatOptions = { year: "numeric", month: "long", day: "numeric" }): string {
+function formatDate(dateString: string, short = false): string {
+  const options: Intl.DateTimeFormatOptions = short
+    ? { year: "numeric", month: "short", day: "numeric" }
+    : { year: "numeric", month: "long", day: "numeric" }
   return new Date(dateString).toLocaleDateString(undefined, options)
 }
 ---
@@ -26,7 +30,7 @@ function formatDate(dateString: string, options: Intl.DateTimeFormatOptions = { 
               <div class="flex justify-between border-b border-dotted border-muted-foreground">
                 <span>{post.data.title}</span>
                 <span class="whitespace-nowrap text-left font-mono text-muted-foreground sm:hidden">
-                  {formatDate(post.data.date, { year: "numeric", month: "short", day: "numeric" })}
+                  {formatDate(post.data.date, true)}
                 </span>
                 <span class="hidden whitespace-nowrap text-left font-mono text-muted-foreground sm:inline">
                   {formatDate(post.data.date)}
@@ -38,4 +42,6 @@ function formatDate(dateString: string, options: Intl.DateTimeFormatOptions = { 
       }
     </ul>
   </section>
+
+  <SubstackEmbed class="mt-12" />
 </Layout>
