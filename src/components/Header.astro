@@ -28,7 +28,7 @@ const isHome = pathname === "/"
       <button
         id="theme-toggle"
         type="button"
-        class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent bg-input transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent bg-orange-500 dark:bg-zinc-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         role="switch"
         aria-checked="false"
         aria-label="Toggle theme"
@@ -80,10 +80,9 @@ const isHome = pathname === "/"
       const meta = document.querySelector('meta[name="theme-color"]')
       if (meta) meta.setAttribute("content", themeColor)
 
-      updateToggle()
-
       requestAnimationFrame(() => {
         document.documentElement.classList.remove("no-transition")
+        updateToggle()
       })
     })
   }

@@ -1,8 +1,6 @@
 @import "tailwindcss";
-@import "@fontsource-variable/inter/standard.css";
-@import "@fontsource-variable/inter/standard-italic.css";
-@import "@fontsource/monaspace-argon/latin-400.css";
 @plugin "@tailwindcss/typography";
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* Theme */
 @theme {
@@ -120,16 +118,22 @@
 }
 
 /* Base Styles */
-* {
-  @apply border-border;
-}
+@layer base {
+  * {
+    @apply border-border;
+  }
 
-body {
-  @apply bg-background text-foreground;
-}
+  body {
+    @apply bg-background text-foreground;
+  }
 
-::selection {
-  @apply bg-[#8a63d2] text-white;
+  ::selection {
+    @apply bg-orange-500;
+  }
+
+  .dark ::selection {
+    @apply text-black;
+  }
 }
 
 /* Utilities */

@@ -1,4 +1,9 @@
 ---
+import "@fontsource-variable/inter/standard.css"
+import "@fontsource-variable/inter/standard-italic.css"
+import "@fontsource/monaspace-argon/latin-400.css"
+import interLatinWghtNormal from "@fontsource-variable/inter/files/inter-latin-standard-normal.woff2?url"
+import monaspaceArgon from "@fontsource/monaspace-argon/files/monaspace-argon-latin-400-normal.woff2?url"
 import Header from "@/components/Header.astro"
 import Footer from "@/components/Footer.astro"
 import "@/styles/global.css"
@@ -20,6 +25,10 @@ const ogImageUrl = image ?? new URL("/og.png", Astro.site ?? "https://maxpetrett
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Preload fonts to prevent FOUT -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" href={interLatinWghtNormal} />
+    <link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" href={monaspaceArgon} />
 
     <!-- Color theme -->
     <script is:inline>

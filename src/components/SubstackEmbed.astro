@@ -4,13 +4,13 @@ interface Props {
   class?: string
 }
 
-const { label = "Subscribe for updates", class: className } = Astro.props
+const { label = "Subscribe for more", class: className } = Astro.props
 
 const baseUrl = "https://maxpetretta.substack.com/embed"
 ---
 
 <div class:list={["substack-embed", className]}>
-  <p class="mb-3 text-sm text-muted-foreground">{label}</p>
+  <h3 class="mb-5 font-medium">{label}</h3>
   <div class="overflow-hidden rounded-lg border border-border">
     <iframe
       id="substack-iframe"
