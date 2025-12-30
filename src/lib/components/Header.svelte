@@ -5,7 +5,7 @@
   import { Button } from "$lib/components/ui/button"
   import { Switch } from "$lib/components/ui/switch"
   import type { Flag } from "$lib/stores/flag.svelte"
-  import { Command } from "lucide-svelte"
+  import Command from "lucide-svelte/icons/command"
   import { getContext } from "svelte"
 
   const opener = getContext<Flag>("opener")
@@ -33,15 +33,15 @@
 
     <div class="flex items-center space-x-5">
       {#if $page.url.pathname !== "/"}
-        <Button onclick={() => sharePageUrl($page.url.href)} variant="ghost" title="Share this page"
-          >{$page.url.pathname}</Button
-        >
+        <Button onclick={() => sharePageUrl($page.url.href)} variant="ghost" title="Share this page">
+          {$page.url.pathname}
+        </Button>
       {/if}
 
       <Switch checked={!isDark} onCheckedChange={() => toggleTheme(theme)} />
 
       <Button onclick={() => opener.toggle(true)} variant="outline" size="icon" class="transition-none">
-        <Command onclick={() => opener.toggle(true)} />
+        <Command />
       </Button>
     </div>
   </nav>

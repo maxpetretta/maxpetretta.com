@@ -5,9 +5,9 @@
   import CommandMenu from "$lib/components/CommandMenu.svelte"
   import Footer from "$lib/components/Footer.svelte"
   import Header from "$lib/components/Header.svelte"
+  import { Toaster } from "$lib/components/ui/sonner"
   import { createFlag } from "$lib/stores/flag.svelte"
   import { setContext } from "svelte"
-  import { Toaster } from "svelte-sonner"
 
   const { data, children } = $props()
   setContext("posts", data.posts)

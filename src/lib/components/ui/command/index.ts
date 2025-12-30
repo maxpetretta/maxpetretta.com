@@ -23,7 +23,6 @@ export {
   Separator,
   Shortcut,
   Loading,
-  //
   Root as Command,
   Dialog as CommandDialog,
   Empty as CommandEmpty,

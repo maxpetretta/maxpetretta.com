@@ -1,13 +1,16 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements"
   import { cn } from "$lib/utils.js"
+  import type { Snippet } from "svelte"
 
-  type $$Props = HTMLAttributes<HTMLDivElement>
+  type Props = HTMLAttributes<HTMLDivElement> & {
+    class?: string
+    children?: Snippet
+  }
 
-  let className: $$Props["class"] = undefined
-  export { className as class }
+  let { class: className, children, ...restProps }: Props = $props()
 </script>
 
-<div class={cn("flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2", className)} {...$$restProps}>
-  <slot />
+<div class={cn("flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2", className)} data-slot="dialog-footer" {...restProps}>
+  {@render children?.()}
 </div>

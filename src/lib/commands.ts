@@ -11,14 +11,14 @@ export type CommandType = {
   group: string
   icon?: string
   shortcut?: string[]
-  action: (theme?: Flag) => void // TODO: should flags be passed somewhere else?
+  action: (theme?: Flag) => void
 }
 
 async function gotoPage(path: string) {
   await goto(path)
 }
 
-async function gotoSocial(platform: keyof typeof SOCIALS) {
+function gotoSocial(platform: keyof typeof SOCIALS) {
   window.open(SOCIALS[platform], "_blank")
 }
 
@@ -30,8 +30,8 @@ export async function sharePageUrl(url: string) {
       await navigator.clipboard.writeText(url)
       toast.success("Link copied!")
     }
-  } catch (error) {
-    console.error(error)
+  } catch (err) {
+    console.error(err)
   }
 }
 
@@ -62,13 +62,16 @@ export function runCommand(id: string, opener: Flag, theme: Flag) {
 export async function getPostCommands(posts: Post[]) {
   const postCommands: CommandType[] = []
   for (const post of posts) {
-    const command = {
-      id: `${post.path.split("/")[1]}`,
-      name: post.metadata.title,
-      group: "Posts",
-      action: () => gotoPage(`${post.path}`),
+    const slug = post.path.split("/")[1]
+    if (slug) {
+      const command: CommandType = {
+        id: slug,
+        name: post.metadata.title,
+        group: "Posts",
+        action: () => gotoPage(post.path),
+      }
+      postCommands.push(command)
     }
-    postCommands.push(command)
   }
 
   return postCommands
@@ -118,20 +121,6 @@ export const COMMANDS: CommandType[] = [
     action: () => gotoSocial("email"),
   },
   {
-    id: "github",
-    name: "GitHub",
-    group: "Contact",
-    shortcut: ["I"],
-    action: () => gotoSocial("github"),
-  },
-  {
-    id: "farcaster",
-    name: "Farcaster",
-    group: "Contact",
-    shortcut: ["F"],
-    action: () => gotoSocial("farcaster"),
-  },
-  {
     id: "twitter",
     name: "Twitter",
     group: "Contact",
@@ -139,11 +128,18 @@ export const COMMANDS: CommandType[] = [
     action: () => gotoSocial("twitter"),
   },
   {
-    id: "linkedin",
-    name: "LinkedIn",
+    id: "substack",
+    name: "Substack",
     group: "Contact",
-    shortcut: ["L"],
-    action: () => gotoSocial("linkedin"),
+    shortcut: ["U"],
+    action: () => gotoSocial("substack"),
+  },
+  {
+    id: "github",
+    name: "GitHub",
+    group: "Contact",
+    shortcut: ["I"],
+    action: () => gotoSocial("github"),
   },
   {
     id: "resume",

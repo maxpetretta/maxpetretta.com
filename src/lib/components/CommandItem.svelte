@@ -4,13 +4,13 @@
   import * as Command from "$lib/components/ui/command"
   import type { Flag } from "$lib/stores/flag.svelte"
 
-  type CommandItemProps = {
+  type Props = {
     command: CommandType
     opener: Flag
     theme: Flag
   }
 
-  const { command, opener, theme }: CommandItemProps = $props()
+  const { command, opener, theme }: Props = $props()
 </script>
 
 <Command.Item onSelect={() => runCommand(command.id, opener, theme)}>
@@ -18,7 +18,7 @@
   {#if command.shortcut}
     <Command.Shortcut>
       {#each command.shortcut as key}
-        <div class="ml-1.5 inline-flex h-5 w-5 items-center justify-center rounded-sm bg-secondary">
+        <div class="ml-1.5 inline-flex size-5 items-center justify-center rounded-xs bg-secondary">
           <kbd class="indent-[1px] font-sans">{key}</kbd>
         </div>
       {/each}

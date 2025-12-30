@@ -1,10 +1,15 @@
 <script lang="ts">
   import { cn } from "$lib/utils.js"
   import { Command as CommandPrimitive } from "cmdk-sv"
-  type $$Props = CommandPrimitive.GroupProps
+  import type { Snippet } from "svelte"
 
-  let className: string | undefined | null = undefined
-  export { className as class }
+  type Props = {
+    class?: string
+    heading?: string
+    children?: Snippet
+  }
+
+  let { class: className, heading, children, ...restProps }: Props = $props()
 </script>
 
 <CommandPrimitive.Group
@@ -12,7 +17,9 @@
     "overflow-hidden p-2 text-foreground [&_[data-cmdk-group-heading]]:px-2 [&_[data-cmdk-group-heading]]:py-1.5 [&_[data-cmdk-group-heading]]:text-xs [&_[data-cmdk-group-heading]]:font-medium [&_[data-cmdk-group-heading]]:text-muted-foreground",
     className,
   )}
-  {...$$restProps}
+  {heading}
+  data-slot="command-group"
+  {...restProps}
 >
-  <slot />
+  {@render children?.()}
 </CommandPrimitive.Group>

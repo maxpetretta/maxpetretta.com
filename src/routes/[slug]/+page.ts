@@ -1,10 +1,13 @@
 import { error } from "@sveltejs/kit"
+import type { PageLoad } from "./$types"
+import type { Metadata } from "$lib/utils"
+import type { Component } from "svelte"
 
-export async function load({ params }) {
+export const load: PageLoad = async ({ params }) => {
   try {
     const post = await import(`../../lib/posts/${params.slug}.md`)
-    const metadata = post.metadata
-    const content = post.default
+    const metadata = post.metadata as Metadata
+    const content = post.default as Component
 
     return {
       metadata: {
@@ -14,6 +17,6 @@ export async function load({ params }) {
       content,
     }
   } catch (err) {
-    error(404, err as string)
+    error(404, `Post not found: ${params.slug}`)
   }
 }

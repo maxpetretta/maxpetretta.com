@@ -1,24 +1,27 @@
 <script lang="ts">
   import { cn } from "$lib/utils.js"
   import { Command as CommandPrimitive } from "cmdk-sv"
+  import type { Snippet } from "svelte"
 
-  type $$Props = CommandPrimitive.ItemProps
+  type Props = {
+    class?: string
+    value?: string
+    onSelect?: (value: string) => void
+    children?: Snippet
+  }
 
-  export let asChild = false
-
-  let className: string | undefined | null = undefined
-  export { className as class }
+  let { class: className, value, onSelect, children, ...restProps }: Props = $props()
 </script>
 
 <CommandPrimitive.Item
-  {asChild}
   class={cn(
-    "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+    "relative flex cursor-default select-none items-center rounded-xs px-2 py-1.5 text-sm outline-hidden aria-selected:bg-accent aria-selected:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50",
     className,
   )}
-  {...$$restProps}
-  let:action
-  let:attrs
+  {value}
+  {onSelect}
+  data-slot="command-item"
+  {...restProps}
 >
-  <slot {action} {attrs} />
+  {@render children?.()}
 </CommandPrimitive.Item>

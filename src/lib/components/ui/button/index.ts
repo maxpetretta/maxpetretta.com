@@ -1,9 +1,10 @@
-import type { Button as ButtonPrimitive } from "bits-ui"
 import { tv, type VariantProps } from "tailwind-variants"
+import type { Snippet } from "svelte"
+import type { HTMLAnchorAttributes, HTMLButtonAttributes } from "svelte/elements"
 import Root from "./button.svelte"
 
 const buttonVariants = tv({
-  base: "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  base: "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   variants: {
     variant: {
       default: "bg-primary text-primary-foreground hover:bg-primary/90",
@@ -17,7 +18,7 @@ const buttonVariants = tv({
       default: "h-10 px-3 py-2",
       sm: "h-9 rounded-md px-3",
       lg: "h-11 rounded-md px-8",
-      icon: "h-10 w-10",
+      icon: "size-10",
     },
   },
   defaultVariants: {
@@ -29,19 +30,16 @@ const buttonVariants = tv({
 type Variant = VariantProps<typeof buttonVariants>["variant"]
 type Size = VariantProps<typeof buttonVariants>["size"]
 
-type Props = ButtonPrimitive.Props & {
+type BaseProps = {
   variant?: Variant
   size?: Size
+  class?: string
+  children?: Snippet
 }
 
-type Events = ButtonPrimitive.Events
+type ButtonProps = BaseProps & HTMLButtonAttributes & { href?: never }
+type AnchorProps = BaseProps & HTMLAnchorAttributes & { href: string }
 
-export {
-  Root as Button,
-  buttonVariants,
-  Root,
-  type Events as ButtonEvents,
-  type Props as ButtonProps,
-  type Events,
-  type Props,
-}
+type Props = ButtonProps | AnchorProps
+
+export { Root as Button, buttonVariants, Root, type Props, type Variant, type Size }
