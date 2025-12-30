@@ -17,7 +17,7 @@ const { href, title, meta, shortMeta, external = false } = Astro.props
     rel={external ? "noreferrer" : undefined}
     class="clickable -mx-2 block rounded-sm px-2 py-1.5 hover:bg-accent hover:text-accent-foreground"
   >
-    <div class="flex justify-between border-b border-dotted border-muted-foreground">
+    <div class="flex justify-between border-b border-dotted border-muted-foreground/60">
       <span>{title}</span>
       {shortMeta ? (
         <>

@@ -33,9 +33,7 @@ const ogImageUrl = image ?? new URL("/og.png", Astro.site ?? "https://maxpetrett
 
     <!-- Color theme -->
     <script is:inline>
-      const isDark =
-        localStorage.theme === "dark" ||
-        (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)
+      const isDark = localStorage.theme !== "light"
       document.documentElement.classList.toggle("dark", isDark)
 
       const themeColor = isDark ? "#09090b" : "#ffffff"

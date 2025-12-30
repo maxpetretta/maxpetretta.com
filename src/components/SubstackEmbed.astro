@@ -11,41 +11,15 @@ const baseUrl = "https://maxpetretta.substack.com/embed"
 
 <div class:list={["substack-embed", className]}>
   <h3 class="mb-5 font-medium">{label}</h3>
-  <div class="overflow-hidden rounded-lg border border-border">
+  <div class="overflow-hidden rounded-lg border border-border bg-white text-stone-500">
+    <p class="px-6 pt-6 text-center text-sm">
+      Follow me on <a href="https://twitter.com/maxpetretta" class="underline underline-offset-4 hover:text-[var(--brand)]">Twitter</a>, subscribe via <a href="/rss.xml" class="underline underline-offset-4 hover:text-[var(--brand)]">RSS</a>, or sign up for my occasional newsletter.
+    </p>
     <iframe
-      id="substack-iframe"
       src={baseUrl}
-      data-light-src={baseUrl}
-      data-dark-src={`${baseUrl}?dark=true`}
       width="100%"
       height="150"
       style="display:block;"
     ></iframe>
   </div>
 </div>
-
-<script>
-  function updateSubstackTheme() {
-    const iframe = document.getElementById("substack-iframe") as HTMLIFrameElement | null
-    if (!iframe) return
-
-    const isDark = document.documentElement.classList.contains("dark")
-    const newSrc = isDark ? iframe.dataset.darkSrc : iframe.dataset.lightSrc
-    if (newSrc && iframe.src !== newSrc) {
-      iframe.src = newSrc
-    }
-  }
-
-  updateSubstackTheme()
-
-  const observer = new MutationObserver((mutations) => {
-    for (const mutation of mutations) {
-      if (mutation.attributeName === "class") {
-        updateSubstackTheme()
-      }
-    }
-  })
-
-  observer.observe(document.documentElement, { attributes: true })
-  document.addEventListener("astro:after-swap", updateSubstackTheme)
-</script>

@@ -107,8 +107,17 @@
     @apply bg-background text-foreground;
   }
 
+  a.underline:hover {
+    color: var(--brand);
+    text-decoration-color: var(--brand);
+  }
+
   ::selection {
-    @apply bg-brand;
+    @apply bg-brand text-black;
+  }
+
+  .dark ::selection {
+    @apply text-white;
   }
 }
 
@@ -121,4 +130,16 @@
 
 @utility clickable {
   @apply transition duration-200 hover:scale-[1.01] active:scale-[0.98] sm:active:scale-[0.99];
+}
+
+/* Prose link hover */
+.prose a:hover {
+  color: var(--brand) !important;
+  text-decoration-color: var(--brand) !important;
+}
+
+/* Center Twitter embeds */
+.twitter-tweet,
+.twitter-tweet-rendered {
+  margin-inline: auto !important;
 }
