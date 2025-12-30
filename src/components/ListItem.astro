@@ -3,9 +3,9 @@ interface Props {
   href: string
   title: string
   meta: string
-  shortMeta?: string
-  description?: string
-  external?: boolean
+  shortMeta?: string | undefined
+  description?: string | undefined
+  external?: boolean | undefined
 }
 
 const { href, title, meta, shortMeta, description, external = false } = Astro.props

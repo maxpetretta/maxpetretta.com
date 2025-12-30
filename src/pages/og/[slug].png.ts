@@ -1,23 +1,21 @@
 import { type CollectionEntry, getCollection } from "astro:content"
 import { ImageResponse } from "@vercel/og"
-import type { APIRoute } from "astro"
+import type { APIRoute, GetStaticPaths } from "astro"
 
-export const prerender = false
-
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const posts: CollectionEntry<"posts">[] = await getCollection("posts")
   return posts.map((post) => ({
     params: { slug: post.id },
+    props: { post },
   }))
 }
 
-export const GET: APIRoute = async ({ params }) => {
-  const posts: CollectionEntry<"posts">[] = await getCollection("posts")
-  const post = posts.find((p) => p.id === params.slug)
+export const GET: APIRoute = ({ props }) => {
+  const post = props.post as CollectionEntry<"posts">
 
   const title = post?.data.title ?? "Max Petretta"
   const date = post?.data.date
-    ? new Date(post.data.date).toLocaleDateString("en-US", {
+    ? post.data.date.toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",
         day: "numeric",

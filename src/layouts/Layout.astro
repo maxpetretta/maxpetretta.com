@@ -4,7 +4,7 @@ import "@fontsource-variable/inter/standard-italic.css"
 import "@fontsource/monaspace-argon/latin-400.css"
 import interLatinWghtNormal from "@fontsource-variable/inter/files/inter-latin-standard-normal.woff2?url"
 import monaspaceArgon from "@fontsource/monaspace-argon/files/monaspace-argon-latin-400-normal.woff2?url"
-import { ViewTransitions } from "astro:transitions"
+import { ClientRouter } from "astro:transitions"
 import SpeedInsights from "@vercel/speed-insights/astro"
 import Header from "@/components/Header.astro"
 import Footer from "@/components/Footer.astro"
@@ -82,7 +82,7 @@ const ogImageUrl = image ?? new URL("/og.png", Astro.site ?? "https://maxpetrett
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImageUrl} />
 
-    <ViewTransitions />
+    <ClientRouter />
   </head>
   <body>
     <div class="mx-auto flex min-h-screen max-w-2xl flex-col px-5 md:px-0">

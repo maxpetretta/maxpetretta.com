@@ -1,12 +1,10 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content"
 import Layout from "@/layouts/Layout.astro"
 import SubstackEmbed from "@/components/SubstackEmbed.astro"
 import ListItem from "@/components/ListItem.astro"
-import { formatDate } from "@/lib/utils"
+import { formatDate, getSortedPosts } from "@/lib/utils"
 
-const posts: CollectionEntry<"posts">[] = await getCollection("posts")
-const sortedPosts = posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+const sortedPosts = await getSortedPosts()
 ---
 
 <Layout title="Blog | Max Petretta" description="Posts, notes, and thoughts">

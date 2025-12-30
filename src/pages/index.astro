@@ -1,15 +1,11 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content"
 import Layout from "@/layouts/Layout.astro"
 import Projects from "@/components/Projects.astro"
 import Experiences from "@/components/Experiences.astro"
 import ListItem from "@/components/ListItem.astro"
-import { formatDate } from "@/lib/utils"
+import { formatDate, getSortedPosts } from "@/lib/utils"
 
-const posts: CollectionEntry<"posts">[] = await getCollection("posts")
-const recentPosts = posts
-  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
-  .slice(0, 5)
+const recentPosts = (await getSortedPosts()).slice(0, 5)
 ---
 
 <Layout>
@@ -20,7 +16,7 @@ const recentPosts = posts
 
   <section class="mt-16">
     <h3 class="mb-4 font-medium">Now</h3>
-    <p class="text-stone-700 dark:text-stone-300">
+    <p class="text-muted-foreground">
       Currently working on making prediction markets social with <a
         href="https://bracky.app/home"
         class="underline underline-offset-4">Bracky</a

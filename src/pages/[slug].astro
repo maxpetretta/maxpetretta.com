@@ -3,10 +3,11 @@ import { getCollection, render, type CollectionEntry } from "astro:content"
 import Layout from "@/layouts/Layout.astro"
 import SubstackEmbed from "@/components/SubstackEmbed.astro"
 import { formatDate } from "@/lib/utils"
+import type { GetStaticPaths } from "astro"
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await getCollection("posts")
-  return posts.map((post: CollectionEntry<"posts">) => ({
+  return posts.map((post) => ({
     params: { slug: post.id },
     props: { post },
   }))
@@ -18,7 +19,7 @@ const { Content } = await render(post)
 const ogImage = new URL(`/og/${post.id}.png`, Astro.site ?? "https://maxpetretta.com").toString()
 ---
 
-<Layout title={`${post.data.title} | Max Petretta`} description={post.data.title} image={ogImage}>
+<Layout title={`${post.data.title} | Max Petretta`} description={post.data.description ?? post.data.title} image={ogImage}>
   <div
     id="progress-bar"
     class="fixed top-0 left-0 z-50 h-0.5 w-0 bg-brand"
