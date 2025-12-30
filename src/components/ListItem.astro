@@ -4,15 +4,17 @@ interface Props {
   title: string
   meta: string
   shortMeta?: string
+  description?: string
   external?: boolean
 }
 
-const { href, title, meta, shortMeta, external = false } = Astro.props
+const { href, title, meta, shortMeta, description, external = false } = Astro.props
 ---
 
 <li>
   <a
     href={href}
+    title={description}
     target={external ? "_blank" : undefined}
     rel={external ? "noreferrer" : undefined}
     class="clickable -mx-2 block rounded-sm px-2 py-1.5 hover:bg-accent hover:text-accent-foreground"

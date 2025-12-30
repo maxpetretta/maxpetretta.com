@@ -32,7 +32,7 @@ const recentPosts = posts
     <h3 class="mb-5 font-medium">Blog</h3>
     <ul class="space-y-2 text-sm sm:text-base">
       {recentPosts.map((post) => (
-        <ListItem href={`/${post.id}`} title={post.data.title} meta={formatDate(post.data.date, true)} />
+        <ListItem href={`/${post.id}`} title={post.data.title} description={post.data.description} meta={formatDate(post.data.date, true)} />
       ))}
     </ul>
     <div class="mt-4 flex justify-end">

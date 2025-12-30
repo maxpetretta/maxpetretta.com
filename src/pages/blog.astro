@@ -19,6 +19,7 @@ const sortedPosts = posts.sort((a, b) => new Date(b.data.date).getTime() - new D
         <ListItem
           href={`/${post.id}`}
           title={post.data.title}
+          description={post.data.description}
           meta={formatDate(post.data.date)}
           shortMeta={formatDate(post.data.date, true)}
         />
