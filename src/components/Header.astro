@@ -28,17 +28,25 @@ const isHome = pathname === "/"
       <button
         id="theme-toggle"
         type="button"
-        class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent bg-orange-400 dark:bg-zinc-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent bg-brand dark:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         role="switch"
-        aria-checked="false"
         aria-label="Toggle theme"
       >
         <span
           id="theme-toggle-thumb"
-          class="pointer-events-none block h-4 w-4 translate-x-0 rounded-full bg-background shadow-lg ring-0 transition-transform"
+          class="pointer-events-none block h-4 w-4 rounded-full bg-background shadow-lg ring-0 transition-transform"
         >
         </span>
       </button>
+      <script is:inline>
+        (function() {
+          const isDark = document.documentElement.classList.contains("dark")
+          const thumb = document.getElementById("theme-toggle-thumb")
+          const toggle = document.getElementById("theme-toggle")
+          if (thumb) thumb.style.transform = isDark ? "translateX(0)" : "translateX(1rem)"
+          if (toggle) toggle.setAttribute("aria-checked", (!isDark).toString())
+        })()
+      </script>
     </div>
   </nav>
 </header>
@@ -50,20 +58,6 @@ const isHome = pathname === "/"
 
     if (!toggle || !thumb) return
 
-    function updateToggle() {
-      const isDark = document.documentElement.classList.contains("dark")
-      toggle?.setAttribute("aria-checked", (!isDark).toString())
-      if (isDark) {
-        thumb?.classList.remove("translate-x-4")
-        thumb?.classList.add("translate-x-0")
-      } else {
-        thumb?.classList.remove("translate-x-0")
-        thumb?.classList.add("translate-x-4")
-      }
-    }
-
-    updateToggle()
-
     toggle.addEventListener("click", () => {
       const isDark = document.documentElement.classList.contains("dark")
       document.documentElement.classList.add("no-transition")
@@ -71,10 +65,14 @@ const isHome = pathname === "/"
       if (isDark) {
         document.documentElement.classList.remove("dark")
         localStorage.theme = "light"
+        thumb.style.transform = "translateX(1rem)"
       } else {
         document.documentElement.classList.add("dark")
         localStorage.theme = "dark"
+        thumb.style.transform = "translateX(0)"
       }
+
+      toggle.setAttribute("aria-checked", isDark.toString())
 
       const themeColor = isDark ? "#ffffff" : "#09090b"
       const meta = document.querySelector('meta[name="theme-color"]')
@@ -82,11 +80,9 @@ const isHome = pathname === "/"
 
       requestAnimationFrame(() => {
         document.documentElement.classList.remove("no-transition")
-        updateToggle()
       })
     })
   }
 
   initThemeToggle()
-  document.addEventListener("astro:after-swap", initThemeToggle)
 </script>

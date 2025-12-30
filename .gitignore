@@ -1,31 +1,19 @@
 # Packages
 node_modules
-/package
-
-# Builds
-/.svelte-kit
-/.vercel
-/build
-
-# Caches
-.eslintcache
-.prettier-cache
-.cspellcache
-
-# Logs
-*.log*
-vite.config.js.timestamp-*
-vite.config.ts.timestamp-*
-
-# Secrets
-.env
-.env*
-!.env.example
-
-# Misc
-.DS_Store
-temp
 
 # Astro
 .astro/
 dist/
+
+# Vercel
+.vercel
+
+# Logs
+*.log*
+
+# Secrets
+.env
+.env.*
+
+# Misc
+.DS_Store

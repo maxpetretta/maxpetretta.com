@@ -2,16 +2,11 @@
 import { getCollection, type CollectionEntry } from "astro:content"
 import Layout from "@/layouts/Layout.astro"
 import SubstackEmbed from "@/components/SubstackEmbed.astro"
+import ListItem from "@/components/ListItem.astro"
+import { formatDate } from "@/lib/utils"
 
 const posts: CollectionEntry<"posts">[] = await getCollection("posts")
 const sortedPosts = posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
-
-function formatDate(dateString: string, short = false): string {
-  const options: Intl.DateTimeFormatOptions = short
-    ? { year: "numeric", month: "short", day: "numeric" }
-    : { year: "numeric", month: "long", day: "numeric" }
-  return new Date(dateString).toLocaleDateString(undefined, options)
-}
 ---
 
 <Layout title="Blog | Max Petretta" description="Posts, notes, and thoughts">
@@ -20,26 +15,14 @@ function formatDate(dateString: string, short = false): string {
     <p class="text-muted-foreground">Posts, notes, and thoughts</p>
 
     <ul class="mt-6 space-y-2 text-sm sm:text-base">
-      {
-        sortedPosts.map((post) => (
-          <li>
-            <a
-              href={`/${post.id}`}
-              class="clickable -mx-2 block rounded-sm px-2 py-1.5 hover:bg-accent hover:text-accent-foreground"
-            >
-              <div class="flex justify-between border-b border-dotted border-muted-foreground">
-                <span>{post.data.title}</span>
-                <span class="whitespace-nowrap text-left font-mono text-muted-foreground sm:hidden">
-                  {formatDate(post.data.date, true)}
-                </span>
-                <span class="hidden whitespace-nowrap text-left font-mono text-muted-foreground sm:inline">
-                  {formatDate(post.data.date)}
-                </span>
-              </div>
-            </a>
-          </li>
-        ))
-      }
+      {sortedPosts.map((post) => (
+        <ListItem
+          href={`/${post.id}`}
+          title={post.data.title}
+          meta={formatDate(post.data.date)}
+          shortMeta={formatDate(post.data.date, true)}
+        />
+      ))}
     </ul>
   </section>
 

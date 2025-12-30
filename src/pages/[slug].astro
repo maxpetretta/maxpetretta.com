@@ -2,6 +2,7 @@
 import { getCollection, render, type CollectionEntry } from "astro:content"
 import Layout from "@/layouts/Layout.astro"
 import SubstackEmbed from "@/components/SubstackEmbed.astro"
+import { formatDate } from "@/lib/utils"
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts")
@@ -15,16 +16,12 @@ type Props = { post: CollectionEntry<"posts"> }
 const { post } = Astro.props as Props
 const { Content } = await render(post)
 const ogImage = new URL(`/og/${post.id}.png`, Astro.site ?? "https://maxpetretta.com").toString()
-
-function formatDate(dateString: string): string {
-  return new Date(dateString).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" })
-}
 ---
 
 <Layout title={`${post.data.title} | Max Petretta`} description={post.data.title} image={ogImage}>
   <div
     id="progress-bar"
-    class="fixed top-0 left-0 z-50 h-0.5 w-0 bg-orange-400"
+    class="fixed top-0 left-0 z-50 h-0.5 w-0 bg-brand"
   ></div>
 
   <article class="prose prose-stone dark:prose-invert prose-headings:font-medium max-w-none">
@@ -56,3 +53,6 @@ function formatDate(dateString: string): string {
   initProgressBar()
   document.addEventListener("astro:after-swap", initProgressBar)
 </script>
+
+<!-- Twitter embeds -->
+<script is:inline async src="https://platform.twitter.com/widgets.js"></script>

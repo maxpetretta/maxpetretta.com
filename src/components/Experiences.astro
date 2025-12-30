@@ -1,4 +1,6 @@
 ---
+import ListItem from "@/components/ListItem.astro"
+
 const experiences = [
   { title: "Bracket, Cofounder & CTO", start: "2023", end: "Now", href: "https://bracky.app/home" },
   { title: "Worldcoin, Sr. Software Engineer", start: "2022", end: "2023", href: "https://world.org" },
@@ -8,23 +10,7 @@ const experiences = [
 ---
 
 <ul class="space-y-2 text-sm sm:text-base">
-  {
-    experiences.map(({ title, start, end, href }) => (
-      <li>
-        <a
-          href={href}
-          target="_blank"
-          rel="noreferrer"
-          class="clickable -mx-2 block rounded-sm px-2 py-1.5 hover:bg-accent hover:text-accent-foreground"
-        >
-          <div class="flex justify-between border-b border-dotted border-muted-foreground">
-            <span>{title}</span>
-            <span class="whitespace-nowrap text-left font-mono text-muted-foreground">
-              {start} ~ {end}
-            </span>
-          </div>
-        </a>
-      </li>
-    ))
-  }
+  {experiences.map(({ title, start, end, href }) => (
+    <ListItem href={href} title={title} meta={`${start} ~ ${end}`} external />
+  ))}
 </ul>

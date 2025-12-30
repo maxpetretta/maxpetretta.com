@@ -4,6 +4,7 @@ import "@fontsource-variable/inter/standard-italic.css"
 import "@fontsource/monaspace-argon/latin-400.css"
 import interLatinWghtNormal from "@fontsource-variable/inter/files/inter-latin-standard-normal.woff2?url"
 import monaspaceArgon from "@fontsource/monaspace-argon/files/monaspace-argon-latin-400-normal.woff2?url"
+import SpeedInsights from "@vercel/speed-insights/astro"
 import Header from "@/components/Header.astro"
 import Footer from "@/components/Footer.astro"
 import "@/styles/global.css"
@@ -85,7 +86,6 @@ const ogImageUrl = image ?? new URL("/og.png", Astro.site ?? "https://maxpetrett
       <Footer />
     </div>
 
-    <!-- Twitter embeds -->
-    <script is:inline async src="https://platform.twitter.com/widgets.js"></script>
+    <SpeedInsights />
   </body>
 </html>

@@ -1,0 +1,32 @@
+---
+interface Props {
+  href: string
+  title: string
+  meta: string
+  shortMeta?: string
+  external?: boolean
+}
+
+const { href, title, meta, shortMeta, external = false } = Astro.props
+---
+
+<li>
+  <a
+    href={href}
+    target={external ? "_blank" : undefined}
+    rel={external ? "noreferrer" : undefined}
+    class="clickable -mx-2 block rounded-sm px-2 py-1.5 hover:bg-accent hover:text-accent-foreground"
+  >
+    <div class="flex justify-between border-b border-dotted border-muted-foreground">
+      <span>{title}</span>
+      {shortMeta ? (
+        <>
+          <span class="whitespace-nowrap text-left font-mono text-muted-foreground sm:hidden">{shortMeta}</span>
+          <span class="hidden whitespace-nowrap text-left font-mono text-muted-foreground sm:inline">{meta}</span>
+        </>
+      ) : (
+        <span class="whitespace-nowrap text-left font-mono text-muted-foreground">{meta}</span>
+      )}
+    </div>
+  </a>
+</li>

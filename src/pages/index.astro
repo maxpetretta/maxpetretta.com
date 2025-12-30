@@ -3,15 +3,13 @@ import { getCollection, type CollectionEntry } from "astro:content"
 import Layout from "@/layouts/Layout.astro"
 import Projects from "@/components/Projects.astro"
 import Experiences from "@/components/Experiences.astro"
+import ListItem from "@/components/ListItem.astro"
+import { formatDate } from "@/lib/utils"
 
 const posts: CollectionEntry<"posts">[] = await getCollection("posts")
 const recentPosts = posts
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
   .slice(0, 5)
-
-function formatDate(dateString: string): string {
-  return new Date(dateString).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })
-}
 ---
 
 <Layout>
@@ -33,20 +31,9 @@ function formatDate(dateString: string): string {
   <section class="mt-16">
     <h3 class="mb-5 font-medium">Blog</h3>
     <ul class="space-y-2 text-sm sm:text-base">
-      {
-        recentPosts.map((post) => (
-          <li>
-            <a href={`/${post.id}`} class="clickable -mx-2 block rounded-sm px-2 py-1.5 hover:bg-accent hover:text-accent-foreground">
-              <div class="flex justify-between border-b border-dotted border-muted-foreground">
-                <span>{post.data.title}</span>
-                <span class="whitespace-nowrap text-left font-mono text-muted-foreground">
-                  {formatDate(post.data.date)}
-                </span>
-              </div>
-            </a>
-          </li>
-        ))
-      }
+      {recentPosts.map((post) => (
+        <ListItem href={`/${post.id}`} title={post.data.title} meta={formatDate(post.data.date, true)} />
+      ))}
     </ul>
     <div class="mt-4 flex justify-end">
       <a

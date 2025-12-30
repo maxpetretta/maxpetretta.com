@@ -56,7 +56,16 @@
         "useForOf": "error",
         "useThrowOnlyError": "error",
         "useImportType": "error",
-        "useExportType": "error"
+        "useExportType": "error",
+        "useAsConstAssertion": "error",
+        "useDefaultParameterLast": "error",
+        "useEnumInitializers": "error",
+        "useSelfClosingElements": "error",
+        "useSingleVarDeclarator": "error",
+        "noUnusedTemplateLiteral": "error",
+        "useNumberNamespace": "error",
+        "noInferrableTypes": "error",
+        "noUselessElse": "error"
       },
       "suspicious": {
         "noArrayIndexKey": "warn",
