@@ -4,6 +4,7 @@ import "@fontsource-variable/inter/standard-italic.css"
 import "@fontsource/monaspace-argon/latin-400.css"
 import interLatinWghtNormal from "@fontsource-variable/inter/files/inter-latin-standard-normal.woff2?url"
 import monaspaceArgon from "@fontsource/monaspace-argon/files/monaspace-argon-latin-400-normal.woff2?url"
+import { ViewTransitions } from "astro:transitions"
 import SpeedInsights from "@vercel/speed-insights/astro"
 import Header from "@/components/Header.astro"
 import Footer from "@/components/Footer.astro"
@@ -33,14 +34,22 @@ const ogImageUrl = image ?? new URL("/og.png", Astro.site ?? "https://maxpetrett
 
     <!-- Color theme -->
     <script is:inline>
-      const isDark = localStorage.theme !== "light"
-      document.documentElement.classList.toggle("dark", isDark)
+      function applyTheme() {
+        const isDark = localStorage.theme !== "light"
+        document.documentElement.classList.toggle("dark", isDark)
 
-      const themeColor = isDark ? "#09090b" : "#ffffff"
-      const themeColorMetaTag = document.createElement("meta")
-      themeColorMetaTag.name = "theme-color"
-      themeColorMetaTag.content = themeColor
-      document.head.appendChild(themeColorMetaTag)
+        const themeColor = isDark ? "#09090b" : "#ffffff"
+        let meta = document.querySelector('meta[name="theme-color"]')
+        if (!meta) {
+          meta = document.createElement("meta")
+          meta.name = "theme-color"
+          document.head.appendChild(meta)
+        }
+        meta.setAttribute("content", themeColor)
+      }
+
+      applyTheme()
+      document.addEventListener("astro:after-swap", applyTheme)
     </script>
 
 
@@ -72,6 +81,8 @@ const ogImageUrl = image ?? new URL("/og.png", Astro.site ?? "https://maxpetrett
     <meta name="twitter:description" content={description} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImageUrl} />
+
+    <ViewTransitions />
   </head>
   <body>
     <div class="mx-auto flex min-h-screen max-w-2xl flex-col px-5 md:px-0">

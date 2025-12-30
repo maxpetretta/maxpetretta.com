@@ -33,13 +33,16 @@ const isHome = pathname === "/"
         </span>
       </button>
       <script is:inline>
-        (function() {
+        function syncToggleState() {
           const isDark = document.documentElement.classList.contains("dark")
           const thumb = document.getElementById("theme-toggle-thumb")
           const toggle = document.getElementById("theme-toggle")
           if (thumb) thumb.style.transform = isDark ? "translateX(0)" : "translateX(1rem)"
           if (toggle) toggle.setAttribute("aria-checked", (!isDark).toString())
-        })()
+        }
+
+        syncToggleState()
+        document.addEventListener("astro:after-swap", syncToggleState)
       </script>
     </div>
   </nav>
@@ -79,4 +82,5 @@ const isHome = pathname === "/"
   }
 
   initThemeToggle()
+  document.addEventListener("astro:after-swap", initThemeToggle)
 </script>
