@@ -22,7 +22,7 @@ const ogImage = new URL(`/og/${post.id}.png`, Astro.site ?? "https://maxpetretta
 <Layout title={`${post.data.title} | Max Petretta`} description={post.data.description ?? post.data.title} image={ogImage}>
   <div
     id="progress-bar"
-    class="fixed top-0 left-0 z-50 h-0.5 w-0 bg-brand"
+    class="fixed top-0 left-0 z-50 h-0.75 w-0 bg-brand"
   ></div>
 
   <article
@@ -49,7 +49,7 @@ const ogImage = new URL(`/og/${post.id}.png`, Astro.site ?? "https://maxpetretta
       prose-code:after:content-none
       prose-img:rounded-lg"
   >
-    <h1 class="mt-8 mb-0 text-base font-medium">{post.data.title}</h1>
+    <h1 class="mt-6 mb-0 text-base font-medium">{post.data.title}</h1>
     <time class="text-xs text-muted-foreground font-mono">{formatDate(post.data.date)}</time>
 
     <Content />

@@ -1,8 +1,8 @@
 ---
-title: Building This Blog
+title: Building This Blog in 2026 and Other Stuff That Happened
 date: "2022-02-11"
 description: A deep dive into the tech stack powering this site
-image: /images/stack.png
+# image: /images/stack.png
 categories: ["web development", "tutorial"]
 ---
 
