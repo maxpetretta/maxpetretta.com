@@ -1,7 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro"
 import SubstackEmbed from "@/components/SubstackEmbed.astro"
-import ListItem from "@/components/ListItem.astro"
+import BlogPost from "@/components/BlogPost.astro"
 import { formatDate, getSortedPosts } from "@/lib/utils"
 
 const sortedPosts = await getSortedPosts()
@@ -14,12 +14,12 @@ const sortedPosts = await getSortedPosts()
 
     <ul class="mt-6 space-y-2 text-sm sm:text-base">
       {sortedPosts.map((post) => (
-        <ListItem
+        <BlogPost
           href={`/${post.id}`}
           title={post.data.title}
           description={post.data.description}
-          meta={formatDate(post.data.date)}
-          shortMeta={formatDate(post.data.date, true)}
+          date={formatDate(post.data.date)}
+          shortDate={formatDate(post.data.date, true)}
         />
       ))}
     </ul>

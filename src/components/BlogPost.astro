@@ -1,0 +1,26 @@
+---
+interface Props {
+  href: string
+  title: string
+  date: string
+  shortDate?: string | undefined
+  description?: string | undefined
+}
+
+const { href, title, date, shortDate, description } = Astro.props
+---
+
+<li>
+  <a
+    href={href}
+    class="-mx-2 block rounded-sm px-2 py-2 hover:bg-accent hover:text-accent-foreground"
+  >
+    <div class="flex justify-between border-b border-dotted border-muted-foreground/60">
+      <span>{title}</span>
+      <span class="text-sm hidden whitespace-nowrap font-mono text-muted-foreground sm:inline">{date}</span>
+    </div>
+    {description && (
+      <p class="mt-1 text-sm text-muted-foreground">{description}</p>
+    )}
+  </a>
+</li>

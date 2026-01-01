@@ -1,5 +1,5 @@
 ---
-import ListItem from "@/components/ListItem.astro"
+import Experience from "@/components/Experience.astro"
 
 const experiences = [
   { title: "Bracket, Cofounder & CTO", start: "2023", end: "Now", href: "https://bracky.app/home" },
@@ -11,6 +11,6 @@ const experiences = [
 
 <ul class="space-y-2 text-sm sm:text-base">
   {experiences.map(({ title, start, end, href }) => (
-    <ListItem href={href} title={title} meta={`${start} ~ ${end}`} external />
+    <Experience href={href} title={title} meta={`${start} ~ ${end}`} external />
   ))}
 </ul>

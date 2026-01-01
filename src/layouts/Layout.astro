@@ -83,6 +83,7 @@ const ogImageUrl = image ?? new URL("/og.png", Astro.site ?? "https://maxpetrett
     <meta name="twitter:image" content={ogImageUrl} />
 
     <ClientRouter />
+    <slot name="head" />
   </head>
   <body>
     <div class="mx-auto flex min-h-screen max-w-2xl flex-col px-5 md:px-0">

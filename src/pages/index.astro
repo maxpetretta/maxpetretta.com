@@ -2,7 +2,7 @@
 import Layout from "@/layouts/Layout.astro"
 import Projects from "@/components/Projects.astro"
 import Experiences from "@/components/Experiences.astro"
-import ListItem from "@/components/ListItem.astro"
+import BlogPost from "@/components/BlogPost.astro"
 import { formatDate, getSortedPosts } from "@/lib/utils"
 
 const recentPosts = (await getSortedPosts()).slice(0, 5)
@@ -14,7 +14,7 @@ const recentPosts = (await getSortedPosts()).slice(0, 5)
     <h3>Detroit, MI</h3>
   </section>
 
-  <section class="mt-24">
+  <section class="mt-20 sm:mt-24">
     <h3 class="mb-4 font-medium">Now</h3>
     <p class="text-foreground">
       Currently working on making prediction markets social with <a
@@ -24,11 +24,11 @@ const recentPosts = (await getSortedPosts()).slice(0, 5)
     </p>
   </section>
 
-  <section class="mt-24">
+  <section class="mt-20 sm:mt-24">
     <h3 class="mb-5 font-medium">Blog</h3>
     <ul class="space-y-2 text-sm sm:text-base">
       {recentPosts.map((post) => (
-        <ListItem href={`/${post.id}`} title={post.data.title} description={post.data.description} meta={formatDate(post.data.date, true)} />
+        <BlogPost href={`/${post.id}`} title={post.data.title} description={post.data.description} date={formatDate(post.data.date, true)} />
       ))}
     </ul>
     <div class="mt-4 flex justify-end">
@@ -36,12 +36,12 @@ const recentPosts = (await getSortedPosts()).slice(0, 5)
     </div>
   </section>
 
-  <section class="mt-14">
+  <section class="mt-10 sm:mt-14">
     <h3 class="mb-4 font-medium">Projects</h3>
     <Projects />
   </section>
 
-  <section class="mt-24">
+  <section class="mt-20 sm:mt-24">
     <h3 class="mb-4 font-medium">Experience</h3>
     <Experiences />
   </section>
