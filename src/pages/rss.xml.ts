@@ -10,7 +10,6 @@ export async function GET(context: APIContext) {
     title: "Max Petretta",
     description: "Posts, notes, and thoughts",
     site,
-    language: "en-us",
     items: posts.map((post) => {
       const postUrl = `${site}/${post.id}/`
       return {

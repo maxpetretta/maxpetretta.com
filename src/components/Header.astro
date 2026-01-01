@@ -32,55 +32,20 @@ const isHome = pathname === "/"
         >
         </span>
       </button>
-      <script is:inline>
-        function syncToggleState() {
-          const isDark = document.documentElement.classList.contains("dark")
-          const thumb = document.getElementById("theme-toggle-thumb")
-          const toggle = document.getElementById("theme-toggle")
-          if (thumb) thumb.style.transform = isDark ? "translateX(0)" : "translateX(1rem)"
-          if (toggle) toggle.setAttribute("aria-checked", (!isDark).toString())
-        }
-
-        syncToggleState()
-        document.addEventListener("astro:after-swap", syncToggleState)
-      </script>
     </div>
   </nav>
 </header>
 
 <script>
-  function initThemeToggle() {
-    const toggle = document.getElementById("theme-toggle")
-    const thumb = document.getElementById("theme-toggle-thumb")
+  import { applyTheme, syncToggleState, initThemeToggle } from "@/lib/theme"
 
-    if (!toggle || !thumb) return
-
-    toggle.addEventListener("click", () => {
-      const isDark = document.documentElement.classList.contains("dark")
-      document.documentElement.classList.add("no-transition")
-
-      if (isDark) {
-        document.documentElement.classList.remove("dark")
-        localStorage.theme = "light"
-        thumb.style.transform = "translateX(1rem)"
-      } else {
-        document.documentElement.classList.add("dark")
-        localStorage.theme = "dark"
-        thumb.style.transform = "translateX(0)"
-      }
-
-      toggle.setAttribute("aria-checked", isDark.toString())
-
-      const themeColor = isDark ? "#ffffff" : "#09090b"
-      const meta = document.querySelector('meta[name="theme-color"]')
-      if (meta) meta.setAttribute("content", themeColor)
-
-      requestAnimationFrame(() => {
-        document.documentElement.classList.remove("no-transition")
-      })
-    })
-  }
-
+  applyTheme()
+  syncToggleState()
   initThemeToggle()
-  document.addEventListener("astro:after-swap", initThemeToggle)
+
+  document.addEventListener("astro:after-swap", () => {
+    applyTheme()
+    syncToggleState()
+    initThemeToggle()
+  })
 </script>

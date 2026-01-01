@@ -19,7 +19,8 @@ interface Props {
 const { title = "Max Petretta", description = "Software Engineer", image } = Astro.props
 const pathname = Astro.url.pathname
 const canonicalUrl = new URL(pathname, Astro.site ?? "https://maxpetretta.com")
-const ogImageUrl = image ?? new URL("/og.png", Astro.site ?? "https://maxpetretta.com").toString()
+const ogImageUrl = image ?? new URL("/favicons/web-app-manifest-512x512.png", Astro.site ?? "https://maxpetretta.com").toString()
+const twitterCard = image ? "summary_large_image" : "summary"
 ---
 
 <!doctype html>
@@ -32,24 +33,16 @@ const ogImageUrl = image ?? new URL("/og.png", Astro.site ?? "https://maxpetrett
     <link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" href={interLatinWghtNormal} />
     <link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" href={monaspaceArgon} />
 
-    <!-- Color theme -->
+    <!-- Color theme (inline to prevent FOUC, see src/lib/theme.ts for module version) -->
     <script is:inline>
-      function applyTheme() {
-        const isDark = localStorage.theme !== "light"
-        document.documentElement.classList.toggle("dark", isDark)
-
-        const themeColor = isDark ? "#09090b" : "#ffffff"
-        let meta = document.querySelector('meta[name="theme-color"]')
-        if (!meta) {
-          meta = document.createElement("meta")
-          meta.name = "theme-color"
-          document.head.appendChild(meta)
-        }
-        meta.setAttribute("content", themeColor)
-      }
-
-      applyTheme()
-      document.addEventListener("astro:after-swap", applyTheme)
+      ;(function() {
+        var d = localStorage.theme !== "light"
+        document.documentElement.classList.toggle("dark", d)
+        var c = d ? "#181716" : "#ffffff"
+        var m = document.querySelector('meta[name="theme-color"]')
+        if (!m) { m = document.createElement("meta"); m.name = "theme-color"; document.head.appendChild(m) }
+        m.content = c
+      })()
     </script>
 
 
@@ -79,7 +72,7 @@ const ogImageUrl = image ?? new URL("/og.png", Astro.site ?? "https://maxpetrett
     <meta name="twitter:creator" content="@maxpetretta" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content={twitterCard} />
     <meta name="twitter:image" content={ogImageUrl} />
 
     <ClientRouter />

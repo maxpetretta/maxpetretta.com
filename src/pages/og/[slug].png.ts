@@ -1,8 +1,8 @@
 import { type CollectionEntry, getCollection } from "astro:content"
-import { ImageResponse } from "@vercel/og"
-import type { APIRoute, GetStaticPaths } from "astro"
 import { readFile } from "node:fs/promises"
 import { join } from "node:path"
+import { ImageResponse } from "@vercel/og"
+import type { APIRoute, GetStaticPaths } from "astro"
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const posts: CollectionEntry<"posts">[] = await getCollection("posts")
@@ -15,13 +15,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const GET: APIRoute = async ({ props }) => {
   const post = props.post as CollectionEntry<"posts">
 
-  // Load Monaspace fonts (stripped of GSUB ligature tables for Satori compatibility)
-  const monaspaceRegular = await readFile(
-    join(process.cwd(), "src/fonts/MonaspaceArgon-Regular-stripped.woff")
-  )
-  const monaspaceBold = await readFile(
-    join(process.cwd(), "src/fonts/MonaspaceArgon-Bold-stripped.woff")
-  )
+  // Load Monaspace font (stripped of GSUB ligature tables for Satori compatibility)
+  const monaspaceBold = await readFile(join(process.cwd(), "src/fonts/MonaspaceArgon-Bold-stripped.woff"))
 
   // Load favicon
   const faviconPath = join(process.cwd(), "public/favicons/favicon-96x96.png")
@@ -36,7 +31,7 @@ export const GET: APIRoute = async ({ props }) => {
   let imageBase64: string | null = null
   if (imageUrl) {
     if (imageUrl.startsWith("/")) {
-      const imagePath = join(process.cwd(), "public", imageUrl)
+      const imagePath = join(process.cwd(), "public", imageUrl.replace(/^\//, ""))
       const imageBuffer = await readFile(imagePath)
       const ext = imageUrl.split(".").pop()?.toLowerCase() ?? "png"
       const mimeType = ext === "jpg" || ext === "jpeg" ? "image/jpeg" : `image/${ext}`
@@ -111,7 +106,7 @@ export const GET: APIRoute = async ({ props }) => {
           right: "40px",
           fontFamily: "Monaspace",
           fontSize: "32px",
-          fontWeight: 400,
+          fontWeight: 700,
           color: "#fafaf9",
         },
         children: "maxpetretta.com",
@@ -140,10 +135,7 @@ export const GET: APIRoute = async ({ props }) => {
     {
       width: 1200,
       height: 630,
-      fonts: [
-        { name: "Monaspace", data: monaspaceRegular, weight: 400, style: "normal" },
-        { name: "Monaspace", data: monaspaceBold, weight: 700, style: "normal" },
-      ],
-    }
+      fonts: [{ name: "Monaspace", data: monaspaceBold, weight: 700, style: "normal" }],
+    },
   )
 }

@@ -19,7 +19,6 @@ const sortedPosts = await getSortedPosts()
           title={post.data.title}
           description={post.data.description}
           date={formatDate(post.data.date)}
-          shortDate={formatDate(post.data.date, true)}
         />
       ))}
     </ul>

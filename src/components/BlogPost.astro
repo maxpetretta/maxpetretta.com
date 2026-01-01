@@ -3,11 +3,10 @@ interface Props {
   href: string
   title: string
   date: string
-  shortDate?: string | undefined
   description?: string | undefined
 }
 
-const { href, title, date, shortDate, description } = Astro.props
+const { href, title, date, description } = Astro.props
 ---
 
 <li>
