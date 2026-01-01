@@ -14,9 +14,9 @@ const recentPosts = (await getSortedPosts()).slice(0, 5)
     <h3>Detroit, MI</h3>
   </section>
 
-  <section class="mt-16">
+  <section class="mt-24">
     <h3 class="mb-4 font-medium">Now</h3>
-    <p class="text-muted-foreground">
+    <p class="text-foreground">
       Currently working on making prediction markets social with <a
         href="https://bracky.app/home"
         class="underline underline-offset-4">Bracky</a
@@ -24,7 +24,7 @@ const recentPosts = (await getSortedPosts()).slice(0, 5)
     </p>
   </section>
 
-  <section class="mt-16">
+  <section class="mt-24">
     <h3 class="mb-5 font-medium">Blog</h3>
     <ul class="space-y-2 text-sm sm:text-base">
       {recentPosts.map((post) => (
@@ -32,21 +32,16 @@ const recentPosts = (await getSortedPosts()).slice(0, 5)
       ))}
     </ul>
     <div class="mt-4 flex justify-end">
-      <a
-        href="/blog"
-        class="clickable rounded-md border border-border px-4 py-2 text-sm hover:bg-accent hover:text-accent-foreground"
-      >
-        All posts &rarr;
-      </a>
+      <a href="/blog" class="underline underline-offset-4 text-muted-foreground hover:text-brand">All posts →</a>
     </div>
   </section>
 
-  <section class="mt-2">
+  <section class="mt-14">
     <h3 class="mb-4 font-medium">Projects</h3>
     <Projects />
   </section>
 
-  <section class="mt-16">
+  <section class="mt-24">
     <h3 class="mb-4 font-medium">Experience</h3>
     <Experiences />
   </section>

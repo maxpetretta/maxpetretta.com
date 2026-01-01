@@ -86,15 +86,11 @@
 }
 
 /* Code Blocks - Theme Switching */
-.shiki,
-.shiki span {
-  color: var(--shiki-light);
-  background-color: var(--shiki-light-bg);
-}
-.dark .shiki,
-.dark .shiki span {
-  color: var(--shiki-dark);
-  background-color: var(--shiki-dark-bg);
+/* Light mode uses inline styles directly, dark mode uses CSS variables */
+.dark .astro-code,
+.dark .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
 }
 
 /* Base Styles */
@@ -126,10 +122,6 @@
   *:not(#theme-toggle-thumb) {
     transition: none !important;
   }
-}
-
-@utility clickable {
-  @apply transition duration-200 hover:scale-[1.01] active:scale-[0.98] sm:active:scale-[0.99];
 }
 
 /* Prose link hover */

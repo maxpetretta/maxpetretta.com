@@ -17,7 +17,7 @@ const iconClass = "inline size-4 stroke-2 sm:absolute sm:right-3 sm:top-3 sm:siz
 
 <ul class="grid grid-cols-1 gap-0.5 sm:grid-cols-2 sm:gap-1.5">
   {projects.map(({ Icon, name, description, href }) => (
-    <li class="clickable bg-muted first:rounded-t-lg last:rounded-b-lg hover:text-card-foreground hover:brightness-95 dark:hover:brightness-125 sm:rounded-lg">
+    <li class="bg-muted first:rounded-t-lg last:rounded-b-lg hover:text-card-foreground hover:brightness-95 dark:hover:brightness-125 sm:rounded-lg">
       <a href={href} target="_blank" rel="noreferrer" class="relative flex items-center justify-between p-2.5 sm:flex-col sm:items-start sm:px-3.5">
         <div class="flex items-center">
           <Icon class={iconClass} />

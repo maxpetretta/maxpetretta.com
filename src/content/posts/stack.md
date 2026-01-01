@@ -2,6 +2,8 @@
 title: Building This Blog
 date: "2022-02-11"
 description: A deep dive into the tech stack powering this site
+image: /images/stack.png
+categories: ["web development", "tutorial"]
 ---
 
 <img src="/images/stack.png" alt="An image of the Next.js and TailwindCSS logos" width="400" height="400" loading="eager" class="mx-auto" />

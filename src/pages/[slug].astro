@@ -25,9 +25,32 @@ const ogImage = new URL(`/og/${post.id}.png`, Astro.site ?? "https://maxpetretta
     class="fixed top-0 left-0 z-50 h-0.5 w-0 bg-brand"
   ></div>
 
-  <article class="prose prose-stone dark:prose-invert prose-headings:font-medium max-w-none">
-    <h1 class="-mb-0.5 mt-6">{post.data.title}</h1>
-    <time class="text-muted-foreground">{formatDate(post.data.date)}</time>
+  <article
+    class="prose prose-stone dark:prose-invert max-w-none
+      prose-headings:font-medium
+      prose-p:leading-[1.75]
+      prose-li:leading-[1.75]
+      prose-p:my-6
+      prose-h2:text-base
+      prose-h2:mt-10
+      prose-h2:mb-4
+      prose-h3:text-base
+      prose-h3:mt-8
+      prose-h3:mb-3
+      prose-li:my-2
+      prose-ul:my-6
+      prose-ol:my-6
+      prose-blockquote:border-l-2
+      prose-blockquote:border-muted-foreground/30
+      prose-blockquote:not-italic
+      prose-a:text-foreground
+      prose-a:font-normal
+      prose-code:before:content-none
+      prose-code:after:content-none
+      prose-img:rounded-lg"
+  >
+    <h1 class="mt-8 mb-0 text-base font-medium">{post.data.title}</h1>
+    <time class="text-xs text-muted-foreground font-mono">{formatDate(post.data.date)}</time>
 
     <Content />
   </article>

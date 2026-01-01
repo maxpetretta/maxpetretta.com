@@ -2,6 +2,8 @@
 title: Twitt3r.xyz
 date: "2022-08-24"
 description: Building a decentralized Twitter clone on Ethereum
+image: https://github.com/maxpetretta/twitt3r.xyz/blob/master/demo.gif?raw=true
+categories: ["web3", "ethereum", "tutorial"]
 ---
 
 <img src="https://github.com/maxpetretta/twitt3r.xyz/blob/master/demo.gif?raw=true" alt="A quick 60 second demo of twitt3r.xyz" width="650" height="458" loading="eager" class="mx-auto">

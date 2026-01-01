@@ -2,6 +2,8 @@
 title: Travel Backpacks
 date: '2022-09-27'
 description: Comparing four one-bag travel backpacks for the perfect carry
+image: /images/backpack.png
+categories: ["travel", "gear"]
 ---
 
 <img src="/images/backpack.png" alt="A photo of a backpack on a busy city street, courtesy of OpenAI's DALL-E" width="300" height="300" loading="eager" class="mx-auto">
