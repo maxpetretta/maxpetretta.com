@@ -1,10 +1,4 @@
 import { type CollectionEntry, getCollection } from "astro:content"
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
 
 export function formatDate(date: Date, short = false): string {
   const options: Intl.DateTimeFormatOptions = short
@@ -15,6 +9,6 @@ export function formatDate(date: Date, short = false): string {
 }
 
 export async function getSortedPosts(): Promise<CollectionEntry<"posts">[]> {
-  const posts = await getCollection("posts")
+  const posts: CollectionEntry<"posts">[] = await getCollection("posts")
   return posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
 }
