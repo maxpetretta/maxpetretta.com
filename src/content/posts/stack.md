@@ -1,5 +1,5 @@
 ---
-title: Building This Blog in 2026 and Other Stuff
+title: Building This Blog
 date: "2022-02-11"
 description: A deep dive into the tech stack powering this site
 # image: /images/stack.png
