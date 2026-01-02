@@ -28,7 +28,7 @@ const isHome = pathname === "/"
       >
         <span
           id="theme-toggle-thumb"
-          class="pointer-events-none block h-4 w-4 rounded-full bg-background shadow-lg ring-0 transition-transform"
+          class="pointer-events-none block h-4 w-4 translate-x-4 rounded-full bg-background shadow-lg ring-0 transition-transform dark:translate-x-0"
         >
         </span>
       </button>
@@ -38,5 +38,13 @@ const isHome = pathname === "/"
 
 <script>
   import { initTheme } from "@/lib/theme"
+
+  // Preserve theme during View Transitions (before swap to prevent flash)
+  document.addEventListener("astro:before-swap", (e) => {
+    const isDark = document.documentElement.classList.contains("dark")
+    e.newDocument.documentElement.classList.toggle("dark", isDark)
+  })
+
+  initTheme()
   document.addEventListener("astro:page-load", initTheme)
 </script>
