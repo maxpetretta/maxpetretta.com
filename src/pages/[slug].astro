@@ -19,7 +19,13 @@ const { Content } = await render(post)
 const ogImage = new URL(`/og/${post.id}.png`, Astro.site ?? "https://maxpetretta.com").toString()
 ---
 
-<Layout title={`${post.data.title} | Max Petretta`} description={post.data.description ?? post.data.title} image={ogImage}>
+<Layout
+  title={`${post.data.title} | Max Petretta`}
+  description={post.data.description ?? post.data.title}
+  image={ogImage}
+  type="article"
+  publishedTime={post.data.date}
+>
   <div
     id="progress-bar"
     class="fixed top-0 left-0 z-50 h-0.75 w-0 bg-brand"
@@ -63,19 +69,20 @@ const ogImage = new URL(`/og/${post.id}.png`, Astro.site ?? "https://maxpetretta
     const progressBar = document.getElementById("progress-bar")
     if (!progressBar) return
 
-    function updateProgress() {
+    const updateProgress = () => {
       const scrollTop = window.scrollY
       const docHeight = document.documentElement.scrollHeight - window.innerHeight
-      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0
-      progressBar!.style.width = `${progress}%`
+      progressBar.style.width = `${docHeight > 0 ? (scrollTop / docHeight) * 100 : 0}%`
     }
 
     window.addEventListener("scroll", updateProgress, { passive: true })
+    document.addEventListener("astro:before-swap", () => {
+      window.removeEventListener("scroll", updateProgress)
+    }, { once: true })
     updateProgress()
   }
 
-  initProgressBar()
-  document.addEventListener("astro:after-swap", initProgressBar)
+  document.addEventListener("astro:page-load", initProgressBar)
 </script>
 
 <!-- Twitter embeds -->

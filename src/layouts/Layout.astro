@@ -8,19 +8,28 @@ import { ClientRouter } from "astro:transitions"
 import SpeedInsights from "@vercel/speed-insights/astro"
 import Header from "@/components/Header.astro"
 import Footer from "@/components/Footer.astro"
+import { THEME_COLORS } from "@/lib/constants"
 import "@/styles/global.css"
 
 interface Props {
   title?: string
   description?: string
   image?: string
+  type?: "website" | "article"
+  publishedTime?: Date | string
 }
 
-const { title = "Max Petretta", description = "Software Engineer", image } = Astro.props
+const { title = "Max Petretta", description = "Software Engineer", image, type = "website", publishedTime } = Astro.props
 const pathname = Astro.url.pathname
 const canonicalUrl = new URL(pathname, Astro.site ?? "https://maxpetretta.com")
 const ogImageUrl = image ?? new URL("/favicons/web-app-manifest-512x512.png", Astro.site ?? "https://maxpetretta.com").toString()
 const twitterCard = image ? "summary_large_image" : "summary"
+const publishedTimeValue = (() => {
+  if (!publishedTime) return undefined
+  if (publishedTime instanceof Date) return publishedTime.toISOString()
+  const parsed = new Date(publishedTime)
+  return Number.isNaN(parsed.getTime()) ? undefined : parsed.toISOString()
+})()
 ---
 
 <!doctype html>
@@ -34,11 +43,11 @@ const twitterCard = image ? "summary_large_image" : "summary"
     <link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" href={monaspaceArgon} />
 
     <!-- Color theme (inline to prevent FOUC, see src/lib/theme.ts for module version) -->
-    <script is:inline>
+    <script is:inline define:vars={{ darkColor: THEME_COLORS.dark, lightColor: THEME_COLORS.light }}>
       ;(function() {
         var d = localStorage.theme !== "light"
         document.documentElement.classList.toggle("dark", d)
-        var c = d ? "#181716" : "#ffffff"
+        var c = d ? darkColor : lightColor
         var m = document.querySelector('meta[name="theme-color"]')
         if (!m) { m = document.createElement("meta"); m.name = "theme-color"; document.head.appendChild(m) }
         m.content = c
@@ -63,9 +72,12 @@ const twitterCard = image ? "summary_large_image" : "summary"
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={type} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={ogImageUrl} />
+    {type === "article" && publishedTimeValue && (
+      <meta property="article:published_time" content={publishedTimeValue} />
+    )}
 
     <!-- Twitter -->
     <meta name="twitter:site" content="@maxpetretta" />

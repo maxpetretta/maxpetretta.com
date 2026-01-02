@@ -11,7 +11,7 @@ export async function GET(context: APIContext) {
     description: "Posts, notes, and thoughts",
     site,
     items: posts.map((post) => {
-      const postUrl = `${site}/${post.id}/`
+      const postUrl = `${site}/${post.id}`
       return {
         title: post.data.title,
         description: post.data.description,

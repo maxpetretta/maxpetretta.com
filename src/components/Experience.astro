@@ -3,12 +3,11 @@ interface Props {
   href: string
   title: string
   meta: string
-  shortMeta?: string | undefined
-  description?: string | undefined
-  external?: boolean | undefined
+  description?: string
+  external?: boolean
 }
 
-const { href, title, meta, shortMeta, description, external = false } = Astro.props
+const { href, title, meta, description, external = false } = Astro.props
 ---
 
 <li>
@@ -21,14 +20,7 @@ const { href, title, meta, shortMeta, description, external = false } = Astro.pr
   >
     <div class="flex justify-between border-b border-dotted border-muted-foreground/60">
       <span>{title}</span>
-      {shortMeta ? (
-        <>
-          <span class="whitespace-nowrap text-left font-mono text-muted-foreground sm:hidden">{shortMeta}</span>
-          <span class="hidden whitespace-nowrap text-left font-mono text-muted-foreground sm:inline">{meta}</span>
-        </>
-      ) : (
-        <span class="whitespace-nowrap text-left font-mono text-muted-foreground">{meta}</span>
-      )}
+      <span class="whitespace-nowrap text-left font-mono text-muted-foreground">{meta}</span>
     </div>
   </a>
 </li>

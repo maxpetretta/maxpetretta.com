@@ -37,15 +37,6 @@ const isHome = pathname === "/"
 </header>
 
 <script>
-  import { applyTheme, syncToggleState, initThemeToggle } from "@/lib/theme"
-
-  applyTheme()
-  syncToggleState()
-  initThemeToggle()
-
-  document.addEventListener("astro:after-swap", () => {
-    applyTheme()
-    syncToggleState()
-    initThemeToggle()
-  })
+  import { initTheme } from "@/lib/theme"
+  document.addEventListener("astro:page-load", initTheme)
 </script>

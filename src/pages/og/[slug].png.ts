@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises"
 import { join } from "node:path"
 import { ImageResponse } from "@vercel/og"
 import type { APIRoute, GetStaticPaths } from "astro"
+import { SITE, THEME_COLORS } from "@/lib/constants"
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const posts: CollectionEntry<"posts">[] = await getCollection("posts")
@@ -30,18 +31,23 @@ export const GET: APIRoute = async ({ props }) => {
   // Load post image if available
   let imageBase64: string | null = null
   if (imageUrl) {
-    if (imageUrl.startsWith("/")) {
-      const imagePath = join(process.cwd(), "public", imageUrl.replace(/^\//, ""))
-      const imageBuffer = await readFile(imagePath)
-      const ext = imageUrl.split(".").pop()?.toLowerCase() ?? "png"
-      const mimeType = ext === "jpg" || ext === "jpeg" ? "image/jpeg" : `image/${ext}`
-      imageBase64 = `data:${mimeType};base64,${imageBuffer.toString("base64")}`
-    } else {
-      const response = await fetch(imageUrl)
-      const arrayBuffer = await response.arrayBuffer()
-      const buffer = Buffer.from(arrayBuffer)
-      const contentType = response.headers.get("content-type") ?? "image/png"
-      imageBase64 = `data:${contentType};base64,${buffer.toString("base64")}`
+    try {
+      if (imageUrl.startsWith("/")) {
+        const imagePath = join(process.cwd(), "public", imageUrl.replace(/^\//, ""))
+        const imageBuffer = await readFile(imagePath)
+        const ext = imageUrl.split(".").pop()?.toLowerCase() ?? "png"
+        const mimeType = ext === "jpg" || ext === "jpeg" ? "image/jpeg" : `image/${ext}`
+        imageBase64 = `data:${mimeType};base64,${imageBuffer.toString("base64")}`
+      } else {
+        const response = await fetch(imageUrl)
+        if (response.ok) {
+          const contentType = response.headers.get("content-type") ?? "image/png"
+          const buffer = Buffer.from(await response.arrayBuffer())
+          imageBase64 = `data:${contentType};base64,${buffer.toString("base64")}`
+        }
+      }
+    } catch {
+      // Fall back to text-only OG image
     }
   }
 
@@ -55,7 +61,7 @@ export const GET: APIRoute = async ({ props }) => {
           fontFamily: "Monaspace",
           fontSize: "72px",
           fontWeight: 700,
-          color: "#fafaf9",
+          color: THEME_COLORS.foreground,
           lineHeight: 1.2,
           textAlign: "center",
           maxWidth: "1100px",
@@ -107,9 +113,9 @@ export const GET: APIRoute = async ({ props }) => {
           fontFamily: "Monaspace",
           fontSize: "32px",
           fontWeight: 700,
-          color: "#fafaf9",
+          color: THEME_COLORS.foreground,
         },
-        children: "maxpetretta.com",
+        children: SITE.domain,
       },
     },
   ]
@@ -127,7 +133,7 @@ export const GET: APIRoute = async ({ props }) => {
           alignItems: "center",
           position: "relative",
           padding: "60px",
-          backgroundColor: "#181716",
+          backgroundColor: THEME_COLORS.dark,
         },
         children,
       },
