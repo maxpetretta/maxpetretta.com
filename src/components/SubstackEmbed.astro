@@ -1,0 +1,26 @@
+---
+interface Props {
+  label?: string
+  class?: string
+}
+
+const { label = "Newsletter", class: className } = Astro.props
+
+const baseUrl = "https://maxpetretta.substack.com/embed"
+---
+
+<div class:list={["substack-embed", className]}>
+  <h3 class="mb-6 font-medium">{label}</h3>
+  <div class="overflow-hidden rounded-lg border border-border bg-[#181716] text-[#a3a2a2]">
+    <p class="px-6 pt-6 text-center text-sm">
+      Follow me on <a href="https://twitter.com/maxpetretta" class="underline underline-offset-4 hover:text-[var(--brand)]">Twitter</a>, subscribe via <a href="/rss.xml" class="underline underline-offset-4 hover:text-[var(--brand)]">RSS</a>, or sign up for my occasional newsletter:
+    </p>
+    <iframe
+      src={baseUrl}
+      width="100%"
+      height="150"
+      style="display:block;"
+      title={`${label} signup form`}
+    ></iframe>
+  </div>
+</div>

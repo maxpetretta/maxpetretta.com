@@ -1,44 +1,89 @@
-# maxp.co
+# maxpetretta.com
 
-Full writeup coming soon!
+Personal site and blog built with [Astro](https://astro.build).
 
+## Tech Stack
+
+- **Framework**: Astro 5 (static output)
+- **Styling**: Tailwind CSS 4
+- **Content**: MDX with Astro Content Collections
+- **Linting**: Biome
+- **Deployment**: Vercel
+
+## Prerequisites
+
+- [Bun](https://bun.sh) (v1.0+)
+- Node.js 18+ (for Astro compatibility)
+
+## Getting Started
+
+```bash
+# Install dependencies
+bun install
+
+# Start development server
+bun run dev
+
+# Build for production
+bun run build
+
+# Preview production build
+bun run preview
+```
+
+## Project Structure
+
+```
+src/
+├── components/     # Astro components
+├── content/
+│   └── posts/      # Blog posts (MDX)
+├── fonts/          # Custom fonts for OG images
+├── layouts/        # Page layouts
+├── lib/            # Utilities and constants
+├── pages/          # Routes
+│   ├── og/         # Dynamic OG image generation
+│   └── *.md.ts     # Markdown routes for CLI access
+├── styles/         # Global CSS
+└── themes/         # Syntax highlighting themes
+```
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `bun run dev` | Start development server |
+| `bun run build` | Build for production |
+| `bun run preview` | Preview production build locally |
+| `bun run lint` | Run all linters (Astro, Biome, TypeScript) |
+| `bun run fix` | Auto-fix linting issues |
+
+## Features
+
+- Zero JavaScript runtime (static HTML)
+- Custom OG images per post
+- RSS feed at `/rss.xml`
+- Automatic sitemap
+- View Transitions
+- Dark/light theme support
+- Markdown routes for CLI access (`/index.md`, `/blog.md`, `/[slug].md`)
+
+## Adding Blog Posts
+
+Create a new `.mdx` file in `src/content/posts/`:
+
+```mdx
+---
+title: "Post Title"
+date: 2024-01-15
+description: "Optional description"
+image: "/images/cover.jpg"
+categories: ["category"]
 ---
 
-# create-svelte
-
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+Post content here...
 ```
 
-## Developing
+## License
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+MIT

@@ -1,0 +1,89 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content"
+import Layout from "@/layouts/Layout.astro"
+import SubstackEmbed from "@/components/SubstackEmbed.astro"
+import { formatDate } from "@/lib/utils"
+import type { GetStaticPaths } from "astro"
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const posts = await getCollection("posts")
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }))
+}
+
+type Props = { post: CollectionEntry<"posts"> }
+const { post } = Astro.props as Props
+const { Content } = await render(post)
+const ogImage = new URL(`/og/${post.id}.png`, Astro.site ?? "https://maxpetretta.com").toString()
+---
+
+<Layout
+  title={`${post.data.title} | Max Petretta`}
+  description={post.data.description ?? post.data.title}
+  image={ogImage}
+  type="article"
+  publishedTime={post.data.date}
+>
+  <div
+    id="progress-bar"
+    class="fixed top-0 left-0 z-50 h-0.75 w-0 bg-brand"
+  ></div>
+
+  <article
+    class="prose prose-stone dark:prose-invert max-w-none
+      prose-headings:font-medium
+      prose-p:leading-[1.75]
+      prose-li:leading-[1.75]
+      prose-p:my-6
+      prose-h2:text-base
+      prose-h2:mt-10
+      prose-h2:mb-4
+      prose-h3:text-base
+      prose-h3:mt-8
+      prose-h3:mb-3
+      prose-li:my-2
+      prose-ul:my-6
+      prose-ol:my-6
+      prose-blockquote:border-l-2
+      prose-blockquote:border-muted-foreground/30
+      prose-blockquote:not-italic
+      prose-a:text-foreground
+      prose-a:font-normal
+      prose-code:before:content-none
+      prose-code:after:content-none
+      prose-img:rounded-lg"
+  >
+    <h1 class="mt-6 mb-0 text-base font-medium">{post.data.title}</h1>
+    <time class="text-xs text-muted-foreground font-mono">{formatDate(post.data.date)}</time>
+
+    <Content />
+  </article>
+
+  <SubstackEmbed class="mt-12 mb-6" />
+</Layout>
+
+<script>
+  function initProgressBar() {
+    const progressBar = document.getElementById("progress-bar")
+    if (!progressBar) return
+
+    const updateProgress = () => {
+      const scrollTop = window.scrollY
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight
+      progressBar.style.width = `${docHeight > 0 ? (scrollTop / docHeight) * 100 : 0}%`
+    }
+
+    window.addEventListener("scroll", updateProgress, { passive: true })
+    document.addEventListener("astro:before-swap", () => {
+      window.removeEventListener("scroll", updateProgress)
+    }, { once: true })
+    updateProgress()
+  }
+
+  document.addEventListener("astro:page-load", initProgressBar)
+</script>
+
+<!-- Twitter embeds -->
+<script is:inline async src="https://platform.twitter.com/widgets.js"></script>

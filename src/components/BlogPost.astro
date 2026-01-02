@@ -1,0 +1,27 @@
+---
+interface Props {
+  href: string
+  title: string
+  date: string
+  description?: string | undefined
+}
+
+const { href, title, date, description } = Astro.props
+const year = date.slice(-4)
+---
+
+<li>
+  <a
+    href={href}
+    class="-mx-2 block rounded-sm px-2 py-2 hover:bg-accent hover:text-accent-foreground"
+  >
+    <div class="flex items-center justify-between border-b border-dotted border-muted-foreground/40">
+      <span>{title}</span>
+      <span class="ml-4 text-xs whitespace-nowrap font-mono text-muted-foreground min-[421px]:hidden">{year}</span>
+      <span class="ml-4 hidden text-xs min-[421px]:inline sm:text-sm whitespace-nowrap font-mono text-muted-foreground">{date}</span>
+    </div>
+    {description && (
+      <p class="mt-1 text-sm text-muted-foreground">{description}</p>
+    )}
+  </a>
+</li>

@@ -1,0 +1,25 @@
+---
+const socials = [
+  { name: "email", href: "mailto:max@maxpetretta.com", external: false },
+  { name: "github", href: "https://github.com/maxpetretta", external: true },
+  { name: "twitter", href: "https://twitter.com/maxpetretta", external: true },
+  { name: "substack", href: "https://substack.maxpetretta.com", external: true },
+]
+---
+
+<footer class="mt-16 mb-6">
+  <address class="flex items-center justify-center gap-4 not-italic sm:gap-6">
+    {
+      socials.map((social) => (
+        <a
+          href={social.href}
+          target={social.external ? "_blank" : undefined}
+          rel={social.external ? "noreferrer" : undefined}
+          class="inline-flex h-9 items-center justify-center rounded-md px-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+        >
+          {social.name}
+        </a>
+      ))
+    }
+  </address>
+</footer>

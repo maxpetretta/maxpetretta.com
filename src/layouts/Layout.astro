@@ -1,0 +1,144 @@
+---
+import "@fontsource-variable/inter/standard.css"
+import "@fontsource-variable/inter/standard-italic.css"
+import "@fontsource/monaspace-argon/latin-400.css"
+import interLatinWghtNormal from "@fontsource-variable/inter/files/inter-latin-standard-normal.woff2?url"
+import monaspaceArgon from "@fontsource/monaspace-argon/files/monaspace-argon-latin-400-normal.woff2?url"
+import { ClientRouter } from "astro:transitions"
+import SpeedInsights from "@vercel/speed-insights/astro"
+import Header from "@/components/Header.astro"
+import Footer from "@/components/Footer.astro"
+import { THEME_COLORS } from "@/lib/constants"
+import "@/styles/global.css"
+
+interface Props {
+  title?: string
+  description?: string
+  image?: string
+  type?: "website" | "article"
+  publishedTime?: Date | string
+}
+
+const { title = "Max Petretta", description = "Software Engineer", image, type = "website", publishedTime } = Astro.props
+const pathname = Astro.url.pathname
+const canonicalUrl = new URL(pathname, Astro.site ?? "https://maxpetretta.com")
+const ogImageUrl = image ?? new URL("/favicons/web-app-manifest-512x512.png", Astro.site ?? "https://maxpetretta.com").toString()
+const twitterCard = image ? "summary_large_image" : "summary"
+const publishedTimeValue = (() => {
+  if (!publishedTime) return undefined
+  if (publishedTime instanceof Date) return publishedTime.toISOString()
+  const parsed = new Date(publishedTime)
+  return Number.isNaN(parsed.getTime()) ? undefined : parsed.toISOString()
+})()
+
+const siteUrl = Astro.site?.toString() ?? "https://maxpetretta.com"
+
+const personSchema = {
+  "@type": "Person",
+  name: "Max Petretta",
+  url: siteUrl,
+  sameAs: [
+    "https://github.com/maxpetretta",
+    "https://twitter.com/maxpetretta",
+    "https://linkedin.com/in/maxpetretta",
+  ],
+}
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Max Petretta",
+  url: siteUrl,
+  author: personSchema,
+}
+
+const articleSchema = type === "article" ? {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  description: description,
+  image: ogImageUrl,
+  url: canonicalUrl.toString(),
+  datePublished: publishedTimeValue,
+  author: personSchema,
+  publisher: personSchema,
+} : null
+
+const jsonLd = type === "article" ? articleSchema : websiteSchema
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Preload fonts to prevent FOUT -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" href={interLatinWghtNormal} />
+    <link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" href={monaspaceArgon} />
+
+    <!-- Color theme (inline to prevent FOUC, see src/lib/theme.ts for module version) -->
+    <script is:inline define:vars={{ darkColor: THEME_COLORS.dark, lightColor: THEME_COLORS.light }}>
+      ;(function() {
+        var d = localStorage.theme !== "light"
+        document.documentElement.classList.toggle("dark", d)
+        var c = d ? darkColor : lightColor
+        var m = document.querySelector('meta[name="theme-color"]')
+        if (!m) { m = document.createElement("meta"); m.name = "theme-color"; document.head.appendChild(m) }
+        m.content = c
+      })()
+    </script>
+
+
+    <!-- Metadata -->
+    <title>{title}</title>
+    <meta name="author" content="Max Petretta" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="follow, index" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/favicons/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicons/favicon-96x96.png" />
+    <link rel="icon" type="image/x-icon" href="/favicons/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
+    <link rel="manifest" href="/favicons/site.webmanifest" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    {type === "article" && publishedTimeValue && (
+      <meta property="article:published_time" content={publishedTimeValue} />
+    )}
+
+    <!-- Twitter -->
+    <meta name="twitter:site" content="@maxpetretta" />
+    <meta name="twitter:creator" content="@maxpetretta" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:card" content={twitterCard} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <!-- Structured Data -->
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <ClientRouter />
+    <slot name="head" />
+  </head>
+  <body>
+    <div class="mx-auto flex min-h-screen max-w-2xl flex-col px-5 md:px-0">
+      <Header pathname={pathname} />
+
+      <main class="grow">
+        <slot />
+      </main>
+
+      <Footer />
+    </div>
+
+    <SpeedInsights />
+  </body>
+</html>
