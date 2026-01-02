@@ -30,6 +30,41 @@ const publishedTimeValue = (() => {
   const parsed = new Date(publishedTime)
   return Number.isNaN(parsed.getTime()) ? undefined : parsed.toISOString()
 })()
+
+const siteUrl = Astro.site?.toString() ?? "https://maxpetretta.com"
+
+const personSchema = {
+  "@type": "Person",
+  name: "Max Petretta",
+  url: siteUrl,
+  sameAs: [
+    "https://github.com/maxpetretta",
+    "https://twitter.com/maxpetretta",
+    "https://linkedin.com/in/maxpetretta",
+  ],
+}
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Max Petretta",
+  url: siteUrl,
+  author: personSchema,
+}
+
+const articleSchema = type === "article" ? {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  description: description,
+  image: ogImageUrl,
+  url: canonicalUrl.toString(),
+  datePublished: publishedTimeValue,
+  author: personSchema,
+  publisher: personSchema,
+} : null
+
+const jsonLd = type === "article" ? articleSchema : websiteSchema
 ---
 
 <!doctype html>
@@ -86,6 +121,9 @@ const publishedTimeValue = (() => {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:card" content={twitterCard} />
     <meta name="twitter:image" content={ogImageUrl} />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
     <ClientRouter />
     <slot name="head" />
