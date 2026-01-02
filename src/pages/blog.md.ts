@@ -12,7 +12,10 @@ export const GET: APIRoute = async () => {
 Posts, notes, and thoughts
 
 ${posts
-  .map((post) => `- [${post.data.title}](/${post.id}.md) - ${post.data.description || ""} *(${formatDate(post.data.date)})*`)
+  .map(
+    (post) =>
+      `- [${post.data.title}](/${post.id}.md) - ${post.data.description || ""} *(${formatDate(post.data.date)})*`,
+  )
   .join("\n")}
 ${getMarkdownFooter("maxpetretta.com/blog", "https://maxpetretta.com/blog")}`
 

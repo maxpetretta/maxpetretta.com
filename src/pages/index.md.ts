@@ -33,7 +33,10 @@ Currently working on making prediction markets social with [Bracky](https://brac
 ## Blog
 
 ${recentPosts
-  .map((post) => `- [${post.data.title}](/${post.id}.md) - ${post.data.description || ""} *(${formatDate(post.data.date)})*`)
+  .map(
+    (post) =>
+      `- [${post.data.title}](/${post.id}.md) - ${post.data.description || ""} *(${formatDate(post.data.date)})*`,
+  )
   .join("\n")}
 
 [All posts →](/blog.md)

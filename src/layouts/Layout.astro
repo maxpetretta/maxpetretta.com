@@ -123,7 +123,7 @@ const jsonLd = type === "article" ? articleSchema : websiteSchema
     <meta name="twitter:image" content={ogImageUrl} />
 
     <!-- Structured Data -->
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
     <ClientRouter />
     <slot name="head" />

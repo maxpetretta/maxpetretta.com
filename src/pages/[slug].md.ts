@@ -1,5 +1,5 @@
-import type { APIRoute, GetStaticPaths } from "astro"
 import { getCollection } from "astro:content"
+import type { APIRoute, GetStaticPaths } from "astro"
 import { getMarkdownFooter } from "@/lib/utils"
 
 export const getStaticPaths: GetStaticPaths = async () => {
