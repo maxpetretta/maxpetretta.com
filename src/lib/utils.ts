@@ -19,10 +19,13 @@ export function getMarkdownFooter(pageName: string, pageUrl: string): string {
 
 **NOTE:** This is the markdown version of [${pageName}](${pageUrl})
 
-Contact me:
+### Contact
 - [email](mailto:max@maxpetretta.com)
 - [github](https://github.com/maxpetretta)
 - [twitter](https://twitter.com/maxpetretta)
+
+### Subscribe
+- [rss](https://maxpetretta.com/rss.xml)
 - [substack](https://substack.maxpetretta.com)
 `
 }
