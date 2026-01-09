@@ -20,7 +20,7 @@ const ogImage = new URL(`/og/${post.id}.png`, Astro.site ?? "https://maxpetretta
 ---
 
 <Layout
-  title={`${post.data.title} | Max Petretta`}
+  title={post.data.title}
   description={post.data.description ?? post.data.title}
   image={ogImage}
   type="article"
