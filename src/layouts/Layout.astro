@@ -89,6 +89,12 @@ const jsonLd = type === "article" ? articleSchema : websiteSchema
       })()
     </script>
 
+    <!-- Lowercase preview mode -->
+    <script is:inline>
+      if (new URLSearchParams(window.location.search).has("lowercase")) {
+        document.documentElement.style.textTransform = "lowercase"
+      }
+    </script>
 
     <!-- Metadata -->
     <title>{title}</title>

@@ -1,12 +1,14 @@
 ---
 title: Building This Blog
-date: "2022-02-11"
-description: A deep dive into the tech stack powering this site
-# image: /images/stack.png
-categories: ["web development", "tutorial"]
+date: 2022-02-11
+description: A deep dive into the (old) tech stack powering this site
+image: /images/stack.png
+categories: ["webdev"]
 ---
 
 <img src="/images/stack.png" alt="An image of the Next.js and TailwindCSS logos" width="400" height="400" loading="eager" class="mx-auto" />
+
+> Note: This is for the previous version of my website, which can still be seen on [GitHub here](https://github.com/maxpetretta/maxpetretta.com/releases/tag/v1.0). For the most recent version, see [this post](/website).
 
 It is 2022, and before anything else _you should have a personal website._
 

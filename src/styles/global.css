@@ -114,6 +114,7 @@
 
   .dark ::selection {
     @apply text-white;
+    background: oklch(0.75 0.183 55.934 / 50%);
   }
 }
 
@@ -128,6 +129,11 @@
 .prose a:hover {
   color: var(--brand) !important;
   text-decoration-color: var(--brand) !important;
+}
+
+/* Prose bold styling */
+.dark .prose strong {
+  color: var(--brand);
 }
 
 /* Center Twitter embeds */

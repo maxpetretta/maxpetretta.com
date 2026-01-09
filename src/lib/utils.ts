@@ -4,7 +4,7 @@ export function formatDate(date: Date, short = false): string {
   const options: Intl.DateTimeFormatOptions = short
     ? { year: "numeric", month: "short", day: "numeric" }
     : { year: "numeric", month: "long", day: "numeric" }
-  options.timeZone = "America/New_York"
+  options.timeZone = "UTC"
   return date.toLocaleDateString("en-US", options)
 }
 
