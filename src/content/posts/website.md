@@ -7,7 +7,7 @@ categories: ["webdev"]
 
 ## Prologue
 
-It has been four (!!!) years since I published the [initial version](https://github.com/maxpetretta/maxpetretta.com/releases/tag/v1.0) of this website. Since then, a lot has happened. We now have intelligence (almost) too cheap to meter, and software development has changed more in the last three months than in the ten years that I've been programming.
+It has been four (!!!) years since I published the [initial version](https://github.com/maxpetretta/maxpetretta.com) of this website. Since then, a lot has happened. We now have intelligence (almost) too cheap to meter, and software development has changed more in the last three months than in the ten years that I've been programming.
 
 I still like having a home online, so I wanted to see what the latest in web tech had to offer. As it turns out, a lot of the things that took so much effort to configure in 2022, *just work* in 2026, even without the help of magic intelligence in the sky.
 
@@ -45,4 +45,4 @@ Design inspiration taken from: [Lee Robinson](https://leerob.com/), [Paco Course
 
 ## Epilogue
 
-Now that the codebase is all in order, the only thing left to do is to write more. I've even created a Substack (linked below, if you're inclined).
+Now that the codebase is all in order, the only thing left to do is to write more. I've even created a Substack to send out updates (linked below, if you're inclined).
