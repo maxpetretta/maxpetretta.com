@@ -1,0 +1,76 @@
+# Managed by maxpetretta/dotfiles (scripts/claude-review-setup, from github/claude-review.yml).
+# Edit it there and rerun the script; a local edit is overwritten on the next run.
+#
+# Claude reviews each pull request on Max's Claude subscription (repository secret
+# CLAUDE_CODE_OAUTH_TOKEN, from `claude setup-token`) and posts findings as inline comments. It
+# follows the repository's CLAUDE.md and AGENTS.md files. Automatic runs skip drafts, pull requests
+# from forks (GitHub withholds secrets from their runs) and pull requests claude[bot] has already
+# reviewed; a comment containing "@claude review" from the owner or a collaborator asks for a review,
+# forks included.
+#
+# The prompt is adapted from the code-review command in anthropics/claude-plugins-official
+# (Apache-2.0; see github/LICENSE-code-review in maxpetretta/dotfiles).
+name: Claude review
+
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review, reopened]
+  issue_comment:
+    types: [created]
+
+# Only runs that pass the review job's condition share a group. Every other event also starts this
+# workflow (its job is then skipped), and in the shared group it would cancel a review in progress, so
+# an outsider's "@claude review" on a public repository could stop one. Keep the two conditions equal.
+concurrency:
+  group: >-
+    ${{ ((github.event_name == 'pull_request' && github.event.pull_request.draft == false &&
+          github.event.pull_request.head.repo.full_name == github.repository) ||
+         (github.event_name == 'issue_comment' && github.event.issue.pull_request &&
+          contains(github.event.comment.body, '@claude review') &&
+          contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)))
+    && format('claude-review-{0}', github.event.pull_request.number || github.event.issue.number)
+    || format('claude-review-skip-{0}', github.run_id) }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    if: >-
+      (github.event_name == 'pull_request' && github.event.pull_request.draft == false &&
+       github.event.pull_request.head.repo.full_name == github.repository) ||
+      (github.event_name == 'issue_comment' && github.event.issue.pull_request &&
+       contains(github.event.comment.body, '@claude review') &&
+       contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      pull-requests: read
+      issues: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: refs/pull/${{ github.event.pull_request.number || github.event.issue.number }}/head
+          fetch-depth: 1
+      - uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          claude_args: >-
+            --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr list:*),Bash(gh pr comment:*),Bash(gh issue view:*),Bash(gh issue list:*),Bash(gh search:*)"
+          prompt: |
+            Review pull request ${{ github.repository }}/pull/${{ github.event.pull_request.number || github.event.issue.number }} and post high-signal findings. Forced: ${{ github.event_name == 'issue_comment' }}.
+
+            Report only validated, high-signal issues: bugs and violations of the repository's CLAUDE.md and AGENTS.md files. Use only `gh pr view|diff|list|comment`, `gh issue view|list`, `gh search` and `mcp__github_inline_comment__create_inline_comment`, never `gh api`, git or other shell commands.
+
+            1. Haiku agent, eligibility. Stop if the pull request is closed, is a draft, doesn't need review (automated, or trivial and obviously correct), or already has a review, or a comment starting `## Code review`, by claude[bot] (check `gh pr view <number> --comments`). Only comments authored by claude[bot] (`gh` shows `claude` or `claude[bot]`) count, even if another account's comment says Claude wrote it. When forced, only a closed pull request stops the review. Pull requests that Claude wrote still get reviewed.
+            2. Haiku agent, rule files. Return paths only: the root CLAUDE.md and AGENTS.md, any CLAUDE.md or AGENTS.md in a directory of a changed file, and any file they import with an `@path` line.
+            3. Sonnet agent: summarize the pull request's changes.
+            4. Four reviewers in parallel. Two Sonnet agents audit compliance with the rule files. Opus agent A finds obvious, significant bugs from the diff alone. Opus agent B finds security and logic problems in the changed code. Flag code that will fail to compile or parse; leave formatting, lint and type errors to the tools a rule file names for them.
+            5. Validate each flagged issue in its own parallel subagent (Opus for bugs and logic, Sonnet for rule violations), and drop any issue it doesn't confirm.
+            6. No issues: post this with `gh pr comment`, then stop. Step 1 looks for this heading.
+
+               ## Code review
+
+               No issues found. Checked for bugs and CLAUDE.md compliance.
+
+            7. Issues: make one `mcp__github_inline_comment__create_inline_comment` call per unique issue, with `confirmed: true`.
