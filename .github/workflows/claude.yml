@@ -47,6 +47,10 @@ jobs:
       - uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          # --permission-mode auto, as in claude-code-action's own claude.yml: a tool call the action's
+          # allowed tools don't cover runs only if Claude Code's safety review passes it. The action sets
+          # --permission-mode acceptEdits for @claude mentions, and this one, which comes after it, wins.
           claude_args: |
             --model claude-opus-5-5
             --effort high
+            --permission-mode auto
